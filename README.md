@@ -1,0 +1,65 @@
+# Nattsken - Utvecklingsblogg
+
+**Ett individuellt arbete för Lexicon Front-end-utbildningen 2025-2026**
+
+Projektet är för https://github.com/Lexicon-Utbildning-Front-end-2025-2026/individuellt-arbete
+
+## Projektbeskrivning
+
+Jag vill simulera en verklighetstrogen uppgift där jag kastas in i ett projekt och ska utveckla en blogg åt något företag. I detta fall är det faktiskt ett projekt jag startat vid sidan av Lexicon med projektnamnet **Nattsken**. Mycket av koden, designen, frontend i Next.js, backend i Express m.m. finns redan klart, likaså rätt omfattande unit testing av API och mobil-app (som i sin tur är byggd i React). Men - stora delar av det projektet är vibe-kodat och passar därför inte scope:et för detta individuella projekt åt Lexicon.
+
+Tanken med detta upplägg är för att uppfylla både uppgiften men samtidigt få något jag kan använda i utvecklingssyfte för mitt existerande projekt också.
+Sen gillar jag idéen att ha  utvecklingsblogg som dokumenterar det arbete som görs och hur arbetet fortskrider.
+
+Bloggen ska ha samma design-vibe som projektet i övrigt enligt befintlig dokumentation, likt ett riktigt företag där det redan finns existerande designprofil. 
+
+Av enkelhetsskäl hostas den på samma plattform som **Nattsken** i övrigt, en egen-hostad Coolify (som fungerar ungefär som Vercel). Men det kräver att jag skapar en rätt basic Dockerfile mm för hosting av den, men det är ingen större fara.
+
+Bloggen skrivs i Next.js och är rätt basic layout-mässigt, men anpassas så att färger, typografi och känsla passar **Nattsken** i övrigt - enligt just existerande designdokument mm.
+
+Inloggning sker med enkel Google OAuth där jag enbart tillåter personer från domänen jine.se att logga in. Det är enkelt löst för säkerheten.
+
+Databasen för **Nattsken** är PostgreSQL i övrigt. Av säkerhetsskäl och enkelhet valde jag att använda Neon (serverless PostgreSQL) i detta projekt, dvs hålla databasen för bloggposter helt separat.
+Det gör även att jag slipper migration och saker av data, samt håller utvecklingsprocesserna separata. Huvudprojektet använder sig av massor av realtids-data och platsinformation, så det är av självklara skäl som denna plattform hålls separat.  
+
+Trots den separata databasen och att det bara är jag som kan logga in, så är det viktigt att all postdata valideras med Zod när jag postar något.
+
+Admin-delen är en simpel CRUD via API-routes som kommunicerar med Neon, inget separat backend utanför Next.js.
+Men jag vill kunna bifoga bilder (eller egentligen klistra in) bilder direkt i admin/WYSIWYG-gränssnittet.
+
+Designen tas fram antingen med Figmas AI-generator eller utifrån ett passande WordPress-tema (beslut ej taget ännu).
+
+## Tech-stack
+
+- **Framework**: Next.js 16 (App Router) + TypeScript
+- **Rich text-editor**: Tiptap
+- **Styling**: Tailwind CSS (**anpassat** efter Nattskens designsystem)
+- **Databas**: Neon (Serverless PostgreSQL), helt separat instans
+- **Autentisering**: NextAuth.js + Google OAuth (endast @jine.se)
+- **Validering**: Zod
+- **Bildhantering**: Lokal uppladdning i admin (kommer specificeras närmare)
+- **Deployment**: Self-hosted Coolify
+
+## Projektdelar
+
+### Publik del
+- Lista med inlägg samt tillhörande paginering
+- Individuella, snyggt formaterade bloggposter (HTML)
+- Responsiv design som matchar Nattskens vibe, med extra fokus på Mobile First
+
+### Admin (skyddad med inloggning)
+- Full CRUD för bloggposter
+- Rich text med Tiptap + möjlighet att klistra in eller ladda upp bilder lokalt
+- Strikt validering med Zod på all indata
+
+## Säkerhet
+
+- Google OAuth med domänbegränsning (jine.se)
+- Helt separat databas (Neon)
+- All indata valideras med Zod
+- Inga kopplingar till huvudprojektets realtids- eller platsdata
+
+## Projektplanering (Lexicon)
+
+- **GitHub Projects + Product Backlog**: https://github.com/users/jine/projects/4
+- **Wireframes / Designskiss**: [Läggs till när Figma är klar]

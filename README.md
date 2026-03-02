@@ -67,3 +67,9 @@ Av enkelhetsskäl hostas den på samma plattform som projektet, en egen-hostad C
 
 - **GitHub Projects + Product Backlog**: https://github.com/users/jine/projects/4
 - **Wireframes / Designskiss**: [Läggs till när Figma är klar]
+
+### Nattsken-referensdokument
+- **Design System Reference**: https://github.com/jine/nattsken.se/blob/main/DESIGN.md
+- **README.md**: https://github.com/jine/nattsken.se/blob/main/README.md
+- **API.md**: https://github.com/jine/nattsken.se/blob/main/API.md
+- **ARCHITECTURE.md**: https://github.com/jine/nattsken.se/blob/main/ARCHITECTURE.md

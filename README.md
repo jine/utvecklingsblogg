@@ -7,7 +7,6 @@ Projektet är för https://github.com/Lexicon-Utbildning-Front-end-2025-2026/ind
 ## Projektbeskrivning
 
 ### Intro
-
 Jag vill simulera en verklighetstrogen uppgift där jag kastas in i ett projekt och ska utveckla en blogg åt något företag. I detta fall är det faktiskt ett projekt jag startat vid sidan av Lexicon med projektnamnet **Nattsken**. Mycket av koden, designen, frontend i Next.js, backend i Express m.m. finns redan klart för det projektet. Men - stora delar av det projektet är saker jag inte vill dela publikt och passar därför inte scope:et för detta individuella projekt åt Lexicon.
 
 ### Projektet
@@ -32,7 +31,7 @@ Trots den separata databasen och att det bara är jag som kan logga in m.h.a OAu
 Admin-delen är en simpel CRUD via API-routes som i sin tur kommunicerar med Neon, inget separat backend utanför Next.js behövs.
 Men jag vill kunna bifoga bilder (eller egentligen klistra in) bilder direkt i admin/WYSIWYG-gränssnittet.
 
-Av enkelhetsskäl hostas den på samma plattform som **Nattsken** i övrigt, en egen-hostad Coolify (som fungerar ungefär som Vercel).
+Av enkelhetsskäl hostas den på samma plattform som projektet, en egen-hostad Coolify (som fungerar ungefär som Vercel).
 
 ## Tech-stack
 
@@ -40,7 +39,7 @@ Av enkelhetsskäl hostas den på samma plattform som **Nattsken** i övrigt, en 
 - **Rich text-editor**: Tiptap
 - **Styling**: Tailwind CSS (**anpassat** efter Nattskens designsystem)
 - **Databas**: Neon (Serverless PostgreSQL), helt separat instans
-- **Autentisering**: NextAuth.js + Google OAuth (endast @jine.se)
+- **Autentisering**: Auth.js + Google OAuth (endast @jine.se)
 - **Validering**: Zod
 - **Bildhantering**: Lokal uppladdning i admin (kommer specificeras närmare)
 - **Deployment**: Self-hosted Coolify
@@ -50,19 +49,19 @@ Av enkelhetsskäl hostas den på samma plattform som **Nattsken** i övrigt, en 
 ### Publik del
 - Lista med inlägg samt tillhörande paginering
 - Individuella, snyggt formaterade bloggposter (HTML)
+- Footer per-post med Postat när/av
 - Responsiv design som matchar Nattskens vibe, med extra fokus på Mobile First
+- Enkel sökning efter inlägg
 
 ### Admin (skyddad med inloggning)
 - Full CRUD för bloggposter
-- Rich text med Tiptap + möjlighet att klistra in eller ladda upp bilder lokalt
+- Rich text med [Tiptap](https://tiptap.dev/) + möjlighet att klistra in eller ladda upp bilder lokalt
 - Strikt validering med Zod på all indata
-
-## Säkerhet
-
 - Google OAuth med domänbegränsning (jine.se)
-- Helt separat databas (Neon)
-- All indata valideras med Zod
-- Inga kopplingar till huvudprojektets realtids- eller platsdata
+
+### Övrigt
+- Helt separat databas ([Neon](https://neon.com/))
+- [Dockerfile](https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile) för att få snabbare deployment i Coolify
 
 ## Projektplanering (Lexicon)
 

@@ -6,7 +6,7 @@ Projektet är för https://github.com/Lexicon-Utbildning-Front-end-2025-2026/ind
 
 ## Projektbeskrivning
 
-Jag vill simulera en verklighetstrogen uppgift där jag kastas in i ett projekt och ska utveckla en blogg åt något företag. I detta fall är det faktiskt ett projekt jag startat vid sidan av Lexicon med projektnamnet **Nattsken**. Mycket av koden, designen, frontend i Next.js, backend i Express m.m. finns redan klart, likaså rätt omfattande unit testing av API och mobil-app (som i sin tur är byggd i React). Men - stora delar av det projektet är vibe-kodat och passar därför inte scope:et för detta individuella projekt åt Lexicon.
+Jag vill simulera en verklighetstrogen uppgift där jag kastas in i ett projekt och ska utveckla en blogg åt något företag. I detta fall är det faktiskt ett projekt jag startat vid sidan av Lexicon med projektnamnet **Nattsken**. Mycket av koden, designen, frontend i Next.js, backend i Express m.m. finns redan klart för det projektet. Men - stora delar av det projektet är vibe-kodat och passar därför inte scope:et för detta individuella projekt åt Lexicon.
 
 Tanken med detta upplägg är för att uppfylla både uppgiften men samtidigt få något jag kan använda i utvecklingssyfte för mitt existerande projekt också.
 Sen gillar jag idéen att ha  utvecklingsblogg som dokumenterar det arbete som görs och hur arbetet fortskrider.

@@ -11,14 +11,16 @@ Jag vill simulera en verklighetstrogen uppgift där jag kastas in i ett projekt 
 
 ### Projektet
 Projektet är en utvecklingsblogg för just den plattformen, där jag kan dokumentera det arbete som görs och hur arbetet fortskrider vid sidan om faktiska plattformen.
+Skriven i Next.js och vara rätt clean rent layout-mässigt, men extra vikt läggs vid att anpassa bloggen så den matchar existerande design utifrån referenser.
 
-Utvecklingsbloggen ska skrivas i Next.js och är rätt basic layout-mässigt, men anpassas så att färger, typografi och känsla passar **Nattsken** i övrigt - enligt just existerande designdokument.
 Tanken med detta upplägg är för att uppfylla både uppgiften men samtidigt få något jag kan använda i utvecklingen för mitt existerande projekt också.
 
-### Detaljer
-
+### Design
 Designen tas fram antingen med Figmas AI-generator eller utifrån ett passande WordPress-tema (inte tagit det beslutet än ännu).
+Utvecklingsbloggen ska anpassas så att färger, typografi och känsla passar **Nattsken** i övrigt - enligt just existerande designdokument.
 
+
+### Tekniker
 Inloggning sker med enkel Google OAuth där jag enbart tillåter personer från domänen jine.se att logga in. Det är enkelt löst.
 
 Databasen för **Nattsken** är PostgreSQL. Av säkerhetsskäl och enkelhet valde jag att använda Neon (serverless PostgreSQL) i detta projekt, dvs hålla databasen för bloggposter helt separat. 

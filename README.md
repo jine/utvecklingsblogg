@@ -19,6 +19,10 @@ Tanken med detta upplägg är för att uppfylla både uppgiften men samtidigt f�
 Designen tas fram antingen med Figmas AI-generator eller utifrån ett passande WordPress-tema (inte tagit det beslutet än ännu).
 Utvecklingsbloggen ska anpassas så att färger, typografi och känsla passar **Nattsken** i övrigt - enligt just existerande designdokument.
 
+#### Inspiration
+[Cloudflare: Blog posts](https://blog.cloudflare.com) 
+[Cloudflare: Individuell bloggpost](https://blog.cloudflare.com/vinext/)
+
 
 ### Tekniker
 Inloggning sker med enkel Google OAuth där jag enbart tillåter personer från domänen jine.se att logga in. Det är enkelt löst.

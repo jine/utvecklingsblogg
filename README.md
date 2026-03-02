@@ -17,6 +17,7 @@ Tanken med detta upplägg är för att uppfylla både uppgiften men samtidigt f�
 
 ### Design
 Designen/Layout tas fram antingen med Figma, men utgå ifrån inspirationslänkarna nedan.
+
 Utvecklingsbloggen ska anpassas så att färger, typografi och känsla passar **Nattsken** i övrigt - enligt existerande designdokument.
 
 #### Inspiration
@@ -72,7 +73,7 @@ Av enkelhetsskäl hostas den på samma plattform som projektet, en egen-hostad C
 ## Projektplanering (Lexicon)
 
 - **GitHub Projects + Product Backlog**: https://github.com/users/jine/projects/4
-- **Wireframes / Designskiss**: [Läggs till när Figma är klar]
+- **Wireframes / Designskiss**: [Utkast 1](https://www.figma.com/make/ni24Umd4pqnUxOT8V821xO/Develop-Blog-for-Nattsken?t=uumlYSsbnfbGeXpY-1)
 
 ### Nattsken-referensdokument (Ej publika)
 - **Design System Reference**: https://github.com/jine/nattsken.se/blob/main/DESIGN.md

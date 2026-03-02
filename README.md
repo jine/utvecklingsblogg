@@ -11,13 +11,13 @@ Jag vill simulera en verklighetstrogen uppgift där jag kastas in i ett projekt 
 
 ### Projektet
 Projektet är en utvecklingsblogg för just den plattformen, där jag kan dokumentera det arbete som görs och hur arbetet fortskrider vid sidan om faktiska plattformen.
-Skriven i Next.js och vara rätt clean rent layout-mässigt, men extra vikt läggs vid att anpassa bloggen så den matchar existerande design utifrån referenser.
+Skriven i Next.js och vara rätt simpel rent layout-mässigt, men extra vikt läggs vid att anpassa bloggen så den matchar existerande design utifrån referenser.
 
 Tanken med detta upplägg är för att uppfylla både uppgiften men samtidigt få något jag kan använda i utvecklingen för mitt existerande projekt också.
 
 ### Design
-Designen tas fram antingen med Figmas AI-generator eller utifrån ett passande WordPress-tema (inte tagit det beslutet än ännu).
-Utvecklingsbloggen ska anpassas så att färger, typografi och känsla passar **Nattsken** i övrigt - enligt just existerande designdokument.
+Designen/Layout tas fram antingen med Figma, men utgå ifrån inspirationslänkarna nedan.
+Utvecklingsbloggen ska anpassas så att färger, typografi och känsla passar **Nattsken** i övrigt - enligt existerande designdokument.
 
 #### Inspiration
 - [Cloudflare: Blogg](https://blog.cloudflare.com) 

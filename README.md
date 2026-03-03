@@ -16,7 +16,7 @@ Skriven i Next.js och vara rätt simpel rent layout-mässigt, men extra vikt lä
 Tanken med detta upplägg är för att uppfylla både uppgiften men samtidigt få något jag kan använda i utvecklingen för mitt existerande projekt också.
 
 ### Design
-Designen/Layout tas fram antingen med Figma, men utgå ifrån inspirationslänkarna nedan.
+Designen/Layout tas fram med Figma, men ska utgå ifrån inspirationslänkarna nedan.
 
 Utvecklingsbloggen ska anpassas så att färger, typografi och känsla passar **Nattsken** i övrigt - enligt existerande designdokument.
 

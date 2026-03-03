@@ -58,7 +58,7 @@ Av enkelhetsskäl hostas den på samma plattform som projektet, en egen-hostad C
 - Individuella, snyggt formaterade bloggposter (HTML)
 - Footer per-post med Postat när/av
 - Responsiv design som matchar Nattskens vibe, med extra fokus på Mobile First
-- Enkel sökning efter inlägg
+- Enkel sökning efter inlägg (EXTRA: kolla på [fuzzystrmatch](https://neon.com/docs/extensions/fuzzystrmatch))
 
 ### Admin (skyddad med inloggning)
 - Full CRUD för bloggposter

@@ -45,7 +45,7 @@ Av enkelhetsskäl hostas den på samma plattform som projektet, en egen-hostad C
 - **Framework**: Next.js 16 (App Router) + TypeScript
 - **Rich text-editor**: Tiptap
 - **Styling**: Tailwind CSS (**anpassat** efter Nattskens designsystem)
-- **Databas**: Neon (Serverless PostgreSQL), helt separat instans
+- **Databas**: Neon (Serverless PostgreSQL), Prisma ORM
 - **Autentisering**: Auth.js + Google OAuth (endast @jine.se)
 - **Validering**: Zod
 - **Bildhantering**: Lokal uppladdning i admin (kommer specificeras närmare)
@@ -58,16 +58,17 @@ Av enkelhetsskäl hostas den på samma plattform som projektet, en egen-hostad C
 - Individuella, snyggt formaterade bloggposter (HTML)
 - Footer per-post med Postat när/av
 - Responsiv design som matchar Nattskens vibe, med extra fokus på Mobile First
-- Enkel sökning efter inlägg (EXTRA: kolla på [fuzzystrmatch](https://neon.com/docs/extensions/fuzzystrmatch))
+- Enkel sökning efter inlägg (EXTRA: Kolla på [fuzzystrmatch](https://neon.com/docs/extensions/fuzzystrmatch))
 
 ### Admin (skyddad med inloggning)
 - Full CRUD för bloggposter
 - Rich text med [Tiptap](https://tiptap.dev/) + möjlighet att klistra in eller ladda upp bilder lokalt
-- Strikt validering med Zod på all indata
+- Strikt validering med [Zod](https://zod.dev/) på all indata
 - Google OAuth med domänbegränsning (jine.se)
 
 ### Övrigt
-- Helt separat databas ([Neon](https://neon.com/))
+- Neon databas ([Neon](https://neon.com/))
+. [Prisma ORM](https://www.prisma.io/)
 - [Dockerfile](https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile) för att få snabbare deployment i Coolify
 
 ## Projektplanering (Lexicon)

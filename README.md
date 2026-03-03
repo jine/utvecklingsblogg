@@ -72,7 +72,7 @@ Av enkelhetsskäl hostas den på samma plattform som projektet, en egen-hostad C
 
 ## Projektplanering (Lexicon)
 
-- **GitHub Projects + Product Backlog**: https://github.com/users/jine/projects/4
+- **GitHub Projects + Product Backlog**: [Projekt Utvecklingsblogg](https://github.com/users/jine/projects/5)
 - **Wireframes / Designskiss**: [Utkast 1](https://www.figma.com/make/ni24Umd4pqnUxOT8V821xO/Develop-Blog-for-Nattsken?t=uumlYSsbnfbGeXpY-1)
 
 ### Nattsken-referensdokument (Ej publika)

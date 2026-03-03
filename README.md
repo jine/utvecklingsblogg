@@ -26,7 +26,7 @@ Utvecklingsbloggen ska anpassas så att färger, typografi och känsla passar **
 
 
 ### Tekniker
-Inloggning sker med enkel Google OAuth där jag enbart tillåter personer från domänen jine.se att logga in. Det är enkelt löst.
+Inloggning sker med enkel Google OAuth där jag enbart tillåter personer från domänen jine.se att logga in. Det är enkelt löst genom att inte tillåta OAuth från andra Google-konton än inom domänen.
 
 Databasen för **Nattsken** är PostgreSQL. Av säkerhetsskäl och enkelhet valde jag att använda Neon (serverless PostgreSQL) i detta projekt, dvs hålla databasen för bloggposter helt separat. 
 Jag valde Neon just för att det är mer likt _vanlig_ Postgres än t.ex. Supabase.
@@ -58,7 +58,7 @@ Av enkelhetsskäl hostas den på samma plattform som projektet, en egen-hostad C
 - Individuella, snyggt formaterade bloggposter (HTML)
 - Footer per-post med Postat när/av
 - Responsiv design som matchar Nattskens vibe, med extra fokus på Mobile First
-- Enkel sökning efter inlägg
+- Enkel sökning efter inlägg (EXTRA: kolla på [fuzzystrmatch](https://neon.com/docs/extensions/fuzzystrmatch))
 
 ### Admin (skyddad med inloggning)
 - Full CRUD för bloggposter
@@ -72,7 +72,7 @@ Av enkelhetsskäl hostas den på samma plattform som projektet, en egen-hostad C
 
 ## Projektplanering (Lexicon)
 
-- **GitHub Projects + Product Backlog**: https://github.com/users/jine/projects/4
+- **GitHub Projects + Product Backlog**: [Projekt Utvecklingsblogg](https://github.com/users/jine/projects/5)
 - **Wireframes / Designskiss**: [Utkast 1](https://www.figma.com/make/ni24Umd4pqnUxOT8V821xO/Develop-Blog-for-Nattsken?t=uumlYSsbnfbGeXpY-1)
 
 ### Nattsken-referensdokument (Ej publika)

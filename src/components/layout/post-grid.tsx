@@ -1,4 +1,4 @@
-import { Post } from "@/generated/prisma";
+import type { Post } from "@/generated/prisma";
 import PostCard from "./post-card";
 
 export default function PostGrid({ posts }: { posts: Post[] }) {
@@ -22,4 +22,4 @@ export default function PostGrid({ posts }: { posts: Post[] }) {
             </div>
         </div>
     );
-};
+}

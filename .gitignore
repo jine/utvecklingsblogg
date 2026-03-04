@@ -40,5 +40,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Prisma
-src/generated/prisma
+# Generated files - Prisma client and Zod schemas
+src/generated/

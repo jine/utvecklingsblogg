@@ -6,5 +6,4 @@ export function formatDate(date: Date | null | undefined): string {
         month: "long",
         day: "numeric",
     });
-    
 }

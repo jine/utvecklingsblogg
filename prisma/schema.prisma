@@ -3,13 +3,47 @@ generator client {
   output   = "../src/generated/prisma"
 }
 
+generator zod {
+  provider = "prisma-zod-generator"
+  output   = "../src/generated/zod"
+}
+
 datasource db {
   provider = "postgresql"
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   email     String   @unique
   name      String?
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  posts     Post[]
+}
+
+model Post {
+  id          String    @id @default(uuid())
+  slug        String    @unique
+  title       String
+  htmlContent String
+  summary     String?
+  published   Boolean   @default(false)
+  publishDate DateTime?
+  deletedAt   DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  authorId    String?
+  author      User?     @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  tags        Tag[]     @relation("PostTags")
+
+  @@index([slug])
+  @@index([published, publishDate(sort: Desc)])
+}
+
+model Tag {
+  id    String @id @default(uuid())
+  name  String @unique
+  posts Post[] @relation("PostTags")
+
+  @@index([name])
 }

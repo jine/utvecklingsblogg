@@ -10,7 +10,6 @@ const titles = [
 
 async function main() {
     await prisma.post.createMany({
-
         // Make sure to set this to avoid errors if you run the seed multiple times
         skipDuplicates: true,
 

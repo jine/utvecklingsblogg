@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
@@ -41,18 +40,20 @@ model Post {
   updatedAt   DateTime  @updatedAt
   authorId    String?
   author      User?     @relation(fields: [authorId], references: [id], onDelete: SetNull)
-  tags        Tag[]     @relation("PostTags")
+  tags        Tag[]     @relation("postTags")
 
   @@index([slug])
   @@index([published, publishDate(sort: Desc)])
+  @@map("post")
 }
 
 model Tag {
   id    String @id @default(uuid())
   name  String @unique
-  posts Post[] @relation("PostTags")
+  posts Post[] @relation("postTags")
 
   @@index([name])
+  @@map("tag")
 }
 
 model Session {

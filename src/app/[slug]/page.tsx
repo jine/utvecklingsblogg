@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
+import { Tags } from "@/components/ui/tags";
 import { getPostBySlug } from "@/lib/posts";
 import { formatDate } from "@/lib/utils";
-import { Tags } from "@/components/ui/tags";
 
 interface PageProps {
     params: {

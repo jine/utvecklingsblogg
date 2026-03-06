@@ -1,14 +1,19 @@
-import type { Post } from "@/generated/prisma";
+import type { Post, Tag } from "@/generated/prisma";
 import { prisma } from "./db";
+
+export type PostWithTags = Post & { tags: Tag[] };
 
 export async function getPostBySlug(
     slug: string | undefined,
-): Promise<Post | null> {
+): Promise<PostWithTags | null> {
     if (!slug) {
         throw new Error("Missing required parameter: slug");
     }
 
-    return await prisma.post.findUnique({ where: { slug } });
+    return await prisma.post.findUnique({
+        where: { slug },
+        include: { tags: true },
+    });
 }
 
 export async function getAllPosts(): Promise<Post[]> {

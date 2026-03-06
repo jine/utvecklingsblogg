@@ -1,4 +1,3 @@
-// lib/auth.ts
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 
@@ -9,7 +8,7 @@ export const auth = betterAuth({
         provider: "postgresql", // Neon = PostgreSQL
     }),
 
-    // No emailAndPassword → disabled by default when omitted
+    // No emailAndPassword
 
     socialProviders: {
         google: {
@@ -27,13 +26,10 @@ export const auth = betterAuth({
         },
     },
 
-    // Optional but useful:
-    // baseURL: process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_APP_URL,
-    //   ^ helps with correct redirect URIs / trusted origins
+    baseURL: process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_APP_URL,
 
     // If you want to force users to have verified email from Google
-    // (recommended for security):
-    // trustEmailFromProvider: true,   // or check docs for exact flag in your version
+    trustEmailFromProvider: true,   // or check docs for exact flag in your version
 
     // Optional: better performance with joins (if your Better Auth version ≥ ~1.4)
     // experimental: {

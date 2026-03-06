@@ -1,5 +1,3 @@
-import Footer from "@/components/layout/footer";
-import Header from "@/components/layout/header";
 import PostGrid from "@/components/layout/post-grid";
 import type { Post } from "@/generated/prisma";
 import { getAllPosts } from "@/lib/posts";

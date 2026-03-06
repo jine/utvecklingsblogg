@@ -10,7 +10,10 @@ export async function getPostBySlug(
         throw new Error("Missing required parameter: slug");
     }
 
-    return await prisma.post.findUnique({ where: { slug }, include: { tags: true } });
+    return await prisma.post.findUnique({
+        where: { slug },
+        include: { tags: true },
+    });
 }
 
 export async function getAllPosts(): Promise<Post[]> {

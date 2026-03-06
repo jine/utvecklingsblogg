@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Tags } from "@/components/ui/tags";
 import { getPostBySlug } from "@/lib/posts";
@@ -6,6 +7,33 @@ import { formatDate } from "@/lib/utils";
 interface PageProps {
     params: {
         slug: string;
+    };
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+    const { slug } = await params;
+    const post = await getPostBySlug(slug);
+
+    if (!post) {
+        return {
+            title: "Not Found",
+        };
+    }
+
+    // Limit title to 60 characters for SEO
+    if (post.title && post.title.length > 60) {
+        post.title = post.title.substring(0, 57) + "...";
+    }
+
+    // Limit description to 160 characters for SEO
+    if (post.summary && post.summary.length > 160) {
+        post.summary = post.summary.substring(0, 157) + "...";
+    }
+    
+    // Use post title and summary for SEO metadata
+    return {
+        title: `${post.title} | Utvecklingsblogg`,
+        description: post.summary ?? undefined,
     };
 }
 

@@ -29,7 +29,7 @@ export const auth = betterAuth({
     baseURL: process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_APP_URL,
 
     // If you want to force users to have verified email from Google
-    trustEmailFromProvider: true,   // or check docs for exact flag in your version
+    trustEmailFromProvider: true, // or check docs for exact flag in your version
 
     // Optional: better performance with joins (if your Better Auth version ≥ ~1.4)
     // experimental: {

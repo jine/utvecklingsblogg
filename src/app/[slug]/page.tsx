@@ -16,7 +16,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     if (!post) {
         return {
-            title: "Not Found",
+            title: "Inlägget hittades inte",
+            description: "Tyvärr kunde vi inte hitta det inlägg du letade efter. Det kan ha tagits bort eller så har du angett en felaktig URL.",
         };
     }
 
@@ -29,11 +30,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     if (post.summary && post.summary.length > 160) {
         post.summary = post.summary.substring(0, 157) + "...";
     }
-    
+
     // Use post title and summary for SEO metadata
     return {
         title: `${post.title} | Utvecklingsblogg`,
-        description: post.summary ?? undefined,
+        description: post.summary || "Läs mer om detta inlägg på utvecklingsbloggen.",
     };
 }
 
@@ -50,7 +51,7 @@ export default async function PostPage({ params }: PageProps) {
     if (!post) notFound();
 
     return (
-        <article className="max-w-4xl mx-auto py-6 prose prose-lg max-w-none">
+        <article className="max-w-4xl mx-auto py-6 prose prose-lg">
             <header className="mb-8">
                 <h1 className="text-4xl font-bold mb-2">{post.title}</h1>
                 <sub className="text-sm text-gray-500 mb-4 block">

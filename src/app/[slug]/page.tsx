@@ -51,7 +51,7 @@ export default async function PostPage({ params }: PageProps) {
     if (!post) notFound();
 
     return (
-        <article className="max-w-4xl mx-auto py-6 prose prose-lg">
+        <article className="max-w-4xl mx-auto py-6 prose prose-lg prose-invert">
             <header className="mb-8">
                 <h1 className="text-4xl font-bold mb-2">{post.title}</h1>
                 <sub className="text-sm text-gray-500 mb-4 block">
@@ -77,7 +77,7 @@ export default async function PostPage({ params }: PageProps) {
             </header>
 
             <div
-                className="prose prose-lg max-w-none"
+                className="max-w-none"
                 dangerouslySetInnerHTML={{ __html: post.htmlContent }}
             ></div>
         </article>

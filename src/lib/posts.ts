@@ -20,4 +20,65 @@ export async function getAllPosts(): Promise<Post[]> {
     return prisma.post.findMany({ orderBy: { publishDate: "desc" } });
 }
 
-// create, update, delete
+export async function createPost(data: {
+    title: string;
+    slug: string;
+    summary: string;
+    htmlContent: string;
+    published: boolean;
+    authorId: string;
+    tagNames: string[];
+}): Promise<void> {
+    const tags = await upsertTags(data.tagNames);
+
+    await prisma.post.create({
+        data: {
+            title: data.title,
+            slug: data.slug,
+            summary: data.summary,
+            htmlContent: data.htmlContent,
+            published: data.published,
+            authorId: data.authorId,
+            publishDate: data.published ? new Date() : null,
+            tags: { connect: tags.map((t) => ({ id: t.id })) },
+        },
+    });
+}
+
+export async function updatePost(
+    originalSlug: string,
+    data: {
+        title: string;
+        slug: string;
+        summary: string;
+        htmlContent: string;
+        published: boolean;
+        tagNames: string[];
+    },
+): Promise<void> {
+    const tags = await upsertTags(data.tagNames);
+
+    await prisma.post.update({
+        where: { slug: originalSlug },
+        data: {
+            title: data.title,
+            slug: data.slug,
+            summary: data.summary,
+            htmlContent: data.htmlContent,
+            published: data.published,
+            publishDate: data.published ? new Date() : null,
+            tags: {
+                set: [],
+                connect: tags.map((t) => ({ id: t.id })),
+            },
+        },
+    });
+}
+
+async function upsertTags(names: string[]): Promise<Tag[]> {
+    return Promise.all(
+        names.map((name) =>
+            prisma.tag.upsert({ where: { name }, create: { name }, update: {} }),
+        ),
+    );
+}

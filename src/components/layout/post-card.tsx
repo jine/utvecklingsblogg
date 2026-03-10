@@ -4,7 +4,7 @@ import { formatDate } from "@/lib/utils";
 
 export default function PostCard({ post }: { post: Post }) {
     return (
-        <article className="border rounded-lg">
+        <article className="border rounded-lg text-white">
             <div className="p-6">
                 <header>
                     <h2 className="font-bold text-2xl mb-2">

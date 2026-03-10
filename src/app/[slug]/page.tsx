@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Tags } from "@/components/ui/tags";
 import { getPostBySlug } from "@/lib/posts";
 import { formatDate } from "@/lib/utils";
+import { EditLink } from "@/components/ui/edit-link";
 
 interface PageProps {
     params: {
@@ -73,6 +74,7 @@ export default async function PostPage({ params }: PageProps) {
                             </div>
                         </>
                     )}
+                    <EditLink slug={post.slug} />
                 </div>
             </header>
 

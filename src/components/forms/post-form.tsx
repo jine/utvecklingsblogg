@@ -30,6 +30,8 @@ export function PostForm({
     cancelHref,
     originalSlug,
 }: PostFormProps) {
+    // State to hold the HTML content from the editor
+    const [htmlContent, setHtmlContent] = useState(defaultValues?.htmlContent ?? "");
 
     return (
         <form action={action} className="space-y-6">
@@ -46,7 +48,6 @@ export function PostForm({
                     id="title"
                     name="title"
                     required
-                    value={defaultValues?.title ?? ""}
                     defaultValue={defaultValues?.title ?? ""}
                     className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Inläggets titel"
@@ -62,7 +63,6 @@ export function PostForm({
                     id="slug"
                     name="slug"
                     required
-                    value={slug}
                     defaultValue={defaultValues?.slug ?? ""}
                     className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="mitt-inlagg"
@@ -87,7 +87,8 @@ export function PostForm({
                 <label htmlFor="htmlContent" className="block text-sm font-medium mb-1">
                     Innehåll (HTML) *
                 </label>
-               <SimpleEditor content={defaultValues?.htmlContent} />
+               <input type="hidden" name="htmlContent" value={htmlContent} />
+               <SimpleEditor content={defaultValues?.htmlContent} onChange={setHtmlContent} />
                {/*<textarea
                     id="htmlContent"
                     name="htmlContent"

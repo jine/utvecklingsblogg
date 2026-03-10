@@ -10,7 +10,7 @@ export function LoginLink() {
     };
 
     return (
-        <button onClick={handleLogin} type="button">
+        <button onClick={handleLogin} type="button" className="pointer">
             Login with Google
         </button>
     );

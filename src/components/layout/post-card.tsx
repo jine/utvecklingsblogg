@@ -4,7 +4,7 @@ import { formatDate } from "@/lib/utils";
 
 export default function PostCard({ post }: { post: Post }) {
     return (
-        <article className="border rounded-lg text-white p-6 space-y-4">
+        <article className="text-white p-6 space-y-4">
             <header>
                 <h2 className="font-bold text-2xl mb-2">
                     <Link href={`/${post.slug}`}>{post.title}</Link>

@@ -11,11 +11,13 @@ export default function PostCard({ post }: { post: Post }) {
                 </h2>
             </header>
 
-            <div className="text-gray-400">
-                {post.summary}
-            </div>
+            <div className="text-gray-400">{post.summary}</div>
 
-            <footer><time dateTime={post.publishDate?.toISOString()}>{formatDate(post.publishDate)}</time></footer>
+            <footer>
+                <time dateTime={post.publishDate?.toISOString()}>
+                    {formatDate(post.publishDate)}
+                </time>
+            </footer>
         </article>
     );
 }

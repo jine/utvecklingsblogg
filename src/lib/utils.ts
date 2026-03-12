@@ -1,6 +1,6 @@
-import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { auth } from "@/lib/auth";
 
 export function formatDate(date: Date | null | undefined): string {
     if (!date) return "";

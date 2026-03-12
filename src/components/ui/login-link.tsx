@@ -21,7 +21,11 @@ export function LoginLink() {
                 <span className="text-sm text-gray-600">
                     Inloggad som: {session.user.email}
                 </span>
-                <button onClick={handleLogout} type="button" className="pointer">
+                <button
+                    onClick={handleLogout}
+                    type="button"
+                    className="pointer"
+                >
                     Logga ut
                 </button>
                 <details className="mt-4">

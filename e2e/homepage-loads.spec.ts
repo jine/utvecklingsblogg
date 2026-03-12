@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 test.describe("Utvecklingsblog Frontpage Test", () => {
 	test("homepage loads with valid article structure", async ({ page }) => {
 		// Navigate to homepage
-		await page.goto("http://localhost:3000/");
+		await page.goto("/");
 
 		// Verify at least one <article> exists
 		const articles = page.locator("article");

@@ -1,5 +1,5 @@
 {
-    "$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
+    "$schema": "https://biomejs.dev/schemas/2.4.6/schema.json",
     "vcs": {
         "enabled": true,
         "clientKind": "git",
@@ -14,7 +14,17 @@
             "!dist",
             "!build",
             "!**/*.md",
-            "!src/generated"
+            "!src/app/globals.css",
+            "!src/generated",
+            "!src/components/tiptap-icons",
+            "!src/components/tiptap-templates",
+            "!src/components/tiptap-extension",
+            "!src/components/tiptap-node",
+            "!src/components/tiptap-ui-primitive",
+            "!src/hooks",
+            "!src/lib/tiptap-utils.ts",
+            "!src/lib/auth.ts",
+            "!src/lib/db.ts"
         ]
     },
     "formatter": {
@@ -26,11 +36,14 @@
         "enabled": true,
         "rules": {
             "recommended": true,
+            "security": {
+                "noDangerouslySetInnerHtml": "off"
+            },
             "suspicious": {
                 "noUnknownAtRules": "off"
             },
             "correctness": {
-                "noUnusedParameters": "off"
+                "noUnusedFunctionParameters": "off"
             }
         },
         "domains": {

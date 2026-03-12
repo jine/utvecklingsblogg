@@ -11,10 +11,7 @@ export function NewPostLink() {
     }
 
     return (
-        <Link
-            href="/new"
-            className="font-medium whitespace-nowrap"
-        >
+        <Link href="/new" className="font-medium whitespace-nowrap">
             Nytt inlägg
         </Link>
     );

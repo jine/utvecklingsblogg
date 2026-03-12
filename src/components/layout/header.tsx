@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { NewPostLink } from "@/components/ui/new-post-link";
 
 export default function Header() {
     return (
@@ -10,12 +11,15 @@ export default function Header() {
                 <h2 className="text-sm text-gray-600">Utvecklingsblogg</h2>
             </div>
 
-            <div className="ml-auto max-w-xs w-full">
-                <input
-                    type="text"
-                    placeholder="Sök efter inlägg..."
-                    className="px-4 py-2 w-full border rounded focus:outline-none focus:ring-1"
-                />
+            <div className="ml-auto flex items-center gap-4">
+                <NewPostLink />
+                <div className="max-w-xs w-full">
+                    <input
+                        type="text"
+                        placeholder="Sök efter inlägg..."
+                        className="px-4 py-2 w-full border rounded focus:outline-none focus:ring-1"
+                    />
+                </div>
             </div>
         </header>
     );

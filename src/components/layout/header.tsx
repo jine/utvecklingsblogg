@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Header() {
     return (
-        <header className="container flex items-center max-w-5xl transparent bg-background/10 backdrop-blur-sm mb-6">
+        <header className="container flex items-center max-w-5xl mb-6">
             <div className="flex-col">
                 <h1 className="text-2xl font-bold">
                     <Link href="/">Nattsken</Link>
@@ -14,7 +14,7 @@ export default function Header() {
                 <input
                     type="text"
                     placeholder="Sök efter inlägg..."
-                    className="px-4 py-2 w-full border rounded-lg"
+                    className="px-4 py-2 w-full border rounded focus:outline-none focus:ring-1"
                 />
             </div>
         </header>

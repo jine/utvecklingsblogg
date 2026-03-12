@@ -1,8 +1,11 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@import '../styles/_variables.scss';
+@import '../styles/_keyframe-animations.scss';
 
 :root {
-    --background: #ffffff;
-    --foreground: #171717;
+    --background: #0a0a0a;
+    --foreground: #ededed;
 }
 
 @theme inline {
@@ -11,14 +14,6 @@
     --font-sans: var(--font-geist-sans);
     --font-mono: var(--font-geist-mono);
 }
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --background: #0a0a0a;
-        --foreground: #ededed;
-    }
-}
-
 body {
     background: var(--background);
     color: var(--foreground);

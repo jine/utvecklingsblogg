@@ -5,6 +5,7 @@ import { getPostBySlug } from "@/lib/posts";
 import { PostForm } from "@/components/forms/post-form";
 import { updatePostAction } from "@/lib/actions";
 import { Metadata } from "next";
+import { requireSession } from "@/lib/utils";
 
 interface PageProps {
     params: {
@@ -42,12 +43,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 
 export default async function EditPostPage({ params }: PageProps) {
+    await requireSession();
+    
     const { slug } = await params;
-    const session = await auth.api.getSession({ headers: await headers() });
-
-    if (!session) {
-        redirect("/");
-    }
 
     const post = await getPostBySlug(slug);
 
@@ -73,7 +71,7 @@ export default async function EditPostPage({ params }: PageProps) {
                 }}
                 submitLabel="Spara ändringar"
                 cancelHref={`/${slug}`}
-                originalSlug={slug}
+                postId={post.id}
             />
         </main>
     );

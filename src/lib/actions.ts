@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import slugify from "slugify";
 import { requireSession } from "@/lib/utils";
 import { createPost, updatePost } from "@/lib/posts";
 
@@ -15,6 +16,11 @@ export type ActionResult =
 export async function createPostAction(state: unknown, formData: FormData): Promise<ActionResult> {
 	const session = await requireSession();
 
+	// Normalize slug before saving
+	const rawSlug = formData.get("slug") as string;
+	const normalizedSlug = slugify(rawSlug, { lower: true, strict: true });
+	formData.set("slug", normalizedSlug);
+
 	// Add authorId to formData for validation
 	formData.append("authorId", session.user.id);
 
@@ -24,15 +30,18 @@ export async function createPostAction(state: unknown, formData: FormData): Prom
 		return postResult;
 	}
 
-	const slug = formData.get("slug") as string;
-
 	// Revalidate the homepage and the new post's page to reflect the new content
 	revalidatePath("/");
-	redirect(`/${slug}`);
+	redirect(`/${normalizedSlug}`);
 }
 
 export async function updatePostAction(state: unknown, formData: FormData): Promise<ActionResult> {
 	await requireSession();
+
+	// Normalize slug before saving
+	const rawSlug = formData.get("slug") as string;
+	const normalizedSlug = slugify(rawSlug, { lower: true, strict: true });
+	formData.set("slug", normalizedSlug);
 
 	const postResult = await updatePost(formData);
 
@@ -40,12 +49,10 @@ export async function updatePostAction(state: unknown, formData: FormData): Prom
 		return postResult;
 	}
 
-	const slug = formData.get("slug") as string;
-
 	// Revalidate the homepage and the updated post's page to reflect the changes
 	revalidatePath("/");
-	revalidatePath(`/${slug}`);
+	revalidatePath(`/${normalizedSlug}`);
 
 	// Redirect to the updated post's page
-	redirect(`/${slug}`);
+	redirect(`/${normalizedSlug}`);
 }

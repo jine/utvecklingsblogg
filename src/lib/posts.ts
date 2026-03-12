@@ -1,6 +1,7 @@
 import type { Post, Tag } from "@/generated/prisma";
 import { prisma } from "./db";
 import { z } from "zod";
+import slugify from "slugify";
 
 export type PostWithTags = Post & { tags: Tag[] };
 
@@ -30,10 +31,16 @@ export async function getPostBySlug(slug: string | undefined): Promise<PostWithT
 }
 
 export async function getAllPosts(): Promise<Post[]> {
-	return prisma.post.findMany({ orderBy: { publishDate: "desc" } });
+	return prisma.post.findMany({
+		where: { published: true },
+		orderBy: { publishDate: "desc" },
+	});
 }
 
 export async function createPost(formData: FormData) {
+	// Normalize slug from form data
+	const rawSlug = formData.get("slug") as string;
+	const normalizedSlug = slugify(rawSlug, { lower: true, strict: true });
 
 	// Validate input using Zod
 	const result = z
@@ -47,7 +54,7 @@ export async function createPost(formData: FormData) {
 			authorId: z.string().min(1),
 		})
 		.safeParse({
-			slug: formData.get("slug"),
+			slug: normalizedSlug,
 			title: formData.get("title"),
 			htmlContent: formData.get("htmlContent"),
 			summary: formData.get("summary") || undefined,
@@ -85,12 +92,15 @@ export async function createPost(formData: FormData) {
 }
 
 export async function updatePost(formData: FormData) {
-
 	// we need the post ID to know which post to update, if it's missing return an error
 	const id = formData.get("postId") as string;
 	if (!id) {
 		return { success: false as const, errors: ["Post ID saknas"] };
 	}
+
+	// Normalize slug from form data
+	const rawSlug = formData.get("slug") as string;
+	const normalizedSlug = slugify(rawSlug, { lower: true, strict: true });
 
 	// Validate input using Zod
 	const result = z
@@ -103,7 +113,7 @@ export async function updatePost(formData: FormData) {
 			tags: z.string(),
 		})
 		.safeParse({
-			slug: formData.get("slug"),
+			slug: normalizedSlug,
 			title: formData.get("title"),
 			htmlContent: formData.get("htmlContent"),
 			summary: formData.get("summary") || undefined,

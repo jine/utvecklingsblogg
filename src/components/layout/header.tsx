@@ -16,7 +16,7 @@ export default function Header() {
                 <div className="max-w-xs w-full">
                     <input
                         type="text"
-                        placeholder="Sök efter inlägg..."
+                        placeholder="Sök inte efter inlägg..."
                         className="px-4 py-2 w-full border rounded focus:outline-none focus:ring-1"
                     />
                 </div>

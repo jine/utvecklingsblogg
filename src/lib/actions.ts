@@ -2,52 +2,50 @@
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
+import { requireSession } from "@/lib/utils";
 import { createPost, updatePost } from "@/lib/posts";
 
-export async function createPostAction(formData: FormData) {
-    const session = await auth.api.getSession({ headers: await headers() });
-    if (!session) throw new Error("Unauthorized");
+export type ActionResult = 
+	| { success: true }
+	| { success: false; errors: string[] };
 
-    const title = formData.get("title") as string;
-    const slug = formData.get("slug") as string;
-    const summary = formData.get("summary") as string;
-    const htmlContent = formData.get("htmlContent") as string;
-    const tagNames = (formData.get("tags") as string)
-        .split(",")
-        .map((t) => t.trim())
-        .filter(Boolean);
-    const published = formData.get("published") === "on";
+// useActionState passes the previous state as the first argument
+// We don't use it, but Next.js requires this signature
 
-    if (!title || !slug || !htmlContent) throw new Error("Missing required fields");
+export async function createPostAction(state: unknown, formData: FormData): Promise<ActionResult> {
+	const session = await requireSession();
 
-    await createPost({ title, slug, summary, htmlContent, published, authorId: session.user.id, tagNames });
+	// Add authorId to formData for validation
+	formData.append("authorId", session.user.id);
 
-    revalidatePath("/");
-    redirect(`/${slug}`);
+	const postResult = await createPost(formData);
+
+	if (!postResult.success) {
+		return postResult;
+	}
+
+	const slug = formData.get("slug") as string;
+
+	// Revalidate the homepage and the new post's page to reflect the new content
+	revalidatePath("/");
+	redirect(`/${slug}`);
 }
 
-export async function updatePostAction(formData: FormData) {
-    const session = await auth.api.getSession({ headers: await headers() });
-    if (!session) redirect("/");
+export async function updatePostAction(state: unknown, formData: FormData): Promise<ActionResult> {
+	await requireSession();
 
-    const originalSlug = formData.get("originalSlug") as string;
-    const title = formData.get("title") as string;
-    const slug = formData.get("slug") as string;
-    const summary = formData.get("summary") as string;
-    const htmlContent = formData.get("htmlContent") as string;
-    const tagNames = (formData.get("tags") as string)
-        .split(",")
-        .map((t) => t.trim())
-        .filter(Boolean);
-    const published = formData.get("published") === "on";
+	const postResult = await updatePost(formData);
 
-    if (!title || !slug || !htmlContent) throw new Error("Missing required fields");
+	if (!postResult.success) {
+		return postResult;
+	}
 
-    await updatePost(originalSlug, { title, slug, summary, htmlContent, published, tagNames });
+	const slug = formData.get("slug") as string;
 
-    revalidatePath("/");
-    revalidatePath(`/${slug}`);
-    redirect(`/${slug}`);
+	// Revalidate the homepage and the updated post's page to reflect the changes
+	revalidatePath("/");
+	revalidatePath(`/${slug}`);
+
+	// Redirect to the updated post's page
+	redirect(`/${slug}`);
 }

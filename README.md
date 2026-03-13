@@ -1,10 +1,10 @@
-# Nattsken - Utvecklingsblogg
+# 🌙 Nattsken - Utvecklingsblogg
 
 **Ett individuellt arbete för Lexicon Front-end-utbildningen 2025-2026**
 
 Projektet är för https://github.com/Lexicon-Utbildning-Front-end-2025-2026/individuellt-arbete
 
-## Projektbeskrivning
+## 📋 Projektbeskrivning
 
 ### Intro
 Jag vill simulera en verklighetstrogen uppgift där jag kastas in i ett projekt och ska utveckla en blogg åt något företag. I detta fall är det faktiskt ett projekt jag startat vid sidan av Lexicon med projektnamnet **Nattsken**. Mycket av koden, designen, frontend i Next.js, backend i Express m.m. finns redan klart för det projektet. Men - stora delar av det projektet är saker jag inte vill dela publikt och passar därför inte scope:et för detta individuella projekt åt Lexicon.
@@ -20,7 +20,7 @@ Designen/Layout tas fram med Figma, men ska utgå ifrån inspirationslänkarna n
 
 Utvecklingsbloggen ska anpassas så att färger, typografi och känsla passar **Nattsken** i övrigt - enligt existerande designdokument.
 
-#### Inspiration
+#### 💡 Inspiration
 - [Cloudflare: Blogg](https://blog.cloudflare.com) 
 - [Cloudflare: Individuell bloggpost](https://blog.cloudflare.com/vinext/)
 
@@ -40,7 +40,7 @@ Men jag vill kunna bifoga bilder (eller egentligen klistra in) bilder direkt i a
 
 Av enkelhetsskäl hostas den på samma plattform som projektet, en egen-hostad Coolify (som fungerar ungefär som Vercel).
 
-## Tech-stack
+## 🛠️ Tech-stack
 
 - **Framework**: Next.js 16 (App Router) + TypeScript
 - **Rich text-editor**: Tiptap
@@ -51,7 +51,7 @@ Av enkelhetsskäl hostas den på samma plattform som projektet, en egen-hostad C
 - **Bildhantering**: Lokal uppladdning i admin (kommer specificeras närmare)
 - **Deployment**: Self-hosted Coolify
 
-## Projektdelar
+## 📦 Projektdelar
 
 ### Publik del
 - Lista med inlägg samt tillhörande paginering
@@ -71,7 +71,7 @@ Av enkelhetsskäl hostas den på samma plattform som projektet, en egen-hostad C
 . [Prisma ORM](https://www.prisma.io/)
 - [Dockerfile](https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile) för att få snabbare deployment i Coolify
 
-## Projektplanering (Lexicon)
+## 📅 Projektplanering (Lexicon)
 
 - **GitHub Projects + Product Backlog**: [Projekt Utvecklingsblogg](https://github.com/users/jine/projects/5)
 - **Wireframes / Designskiss**: [Utkast 1](https://www.figma.com/make/ni24Umd4pqnUxOT8V821xO/Develop-Blog-for-Nattsken?t=uumlYSsbnfbGeXpY-1)

@@ -10,12 +10,12 @@ export default function PostGrid({ posts }: { posts: Post[] }) {
     return (
         <div className="grid gap-6">
             {/* Featured post - full width */}
-            <div className="w-full">
+            <div className="w-full group">
                 <PostCard post={featuredPost} />
             </div>
 
             {/* Show posts in column, but make 3 col grid on desktop */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 group">
                 {blogPosts.map((post: Post) => (
                     <PostCard key={post.id} post={post} />
                 ))}

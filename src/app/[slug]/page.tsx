@@ -56,10 +56,10 @@ export default async function PostPage({ params }: PageProps) {
     if (!post) notFound();
 
     return (
-        <article className="max-w-4xl mx-auto py-6 prose prose-lg prose-invert">
+        <article className="max-w-4xl mx-auto py-6 prose prose-lg">
             <header className="mb-8">
                 <h1 className="text-4xl font-bold mb-2">{post.title}</h1>
-                <sub className="text-sm text-gray-500 mb-4 block">
+                <sub className="text-sm text-muted mb-4 block">
                     {post.summary}
                 </sub>
 

@@ -21,6 +21,7 @@
             "!src/components/tiptap-extension",
             "!src/components/tiptap-node",
             "!src/components/tiptap-ui-primitive",
+            "!src/components/tiptap-ui",
             "!src/hooks",
             "!src/lib/tiptap-utils.ts",
             "!src/lib/auth.ts",

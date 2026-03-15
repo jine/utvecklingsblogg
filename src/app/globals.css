@@ -4,18 +4,110 @@
 @import "../styles/_keyframe-animations.scss";
 
 :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Night Bloom - Essential tokens */
+    --nb-bg: #0a0a0a;
+    --nb-surface: #111111;
+    --nb-text: #ededed;
+    --nb-muted: #666666;
+    --nb-primary: #E01055;
+    --nb-border: #222222;
 }
 
 @theme inline {
-    --color-background: var(--background);
-    --color-foreground: var(--foreground);
-    --font-sans: var(--font-geist-sans);
-    --font-mono: var(--font-geist-mono);
+    /* Colors */
+    --color-bg: var(--nb-bg);
+    --color-surface: var(--nb-surface);
+    --color-text: var(--nb-text);
+    --color-muted: var(--nb-muted);
+    --color-primary: var(--nb-primary);
+    --color-border: var(--nb-border);
+    
+    /* Legacy compatibility */
+    --color-background: var(--nb-bg);
+    --color-foreground: var(--nb-text);
 }
+
+/* Typography - applied globally */
+html {
+    font-size: 16px;
+}
+
 body {
-    background: var(--background);
-    color: var(--foreground);
-    font-family: Arial, Helvetica, sans-serif;
+    color: var(--nb-text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.125rem;
+    line-height: 1.75;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+    line-height: 1.3;
+}
+
+/* Prose styles for dark theme (without prose-invert) */
+.prose {
+    color: var(--nb-text);
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+    color: var(--nb-text);
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.prose p, .prose ul, .prose ol, .prose blockquote {
+    color: var(--nb-text);
+}
+
+.prose a {
+    color: var(--nb-primary);
+}
+
+.prose strong {
+    color: var(--nb-text);
+}
+
+.prose code {
+    background: var(--nb-surface);
+    color: var(--nb-text);
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+}
+
+.prose pre {
+    background: var(--nb-surface);
+    color: var(--nb-text);
+}
+
+.prose blockquote {
+    border-left-color: var(--nb-border);
+}
+
+.prose hr {
+    border-color: var(--nb-border);
+}
+
+/* Tiptap editor focus styles */
+.simple-editor-wrapper:has(.tiptap.ProseMirror:focus) {
+    border-color: var(--nb-primary);
+}
+
+/* Tiptap editor content styling */
+.tiptap.ProseMirror {
+    color: var(--nb-text);
+}
+
+.tiptap.ProseMirror p {
+    color: var(--nb-text);
+}
+
+/* Atmospheric Background */
+.atmospheric-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+        radial-gradient(ellipse 140% 80% at -15% -5%, rgba(224, 16, 85, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse 90% 70% at 110% 105%, rgba(123, 47, 208, 0.07) 0%, transparent 45%),
+        radial-gradient(ellipse 55% 40% at 90% 20%, rgba(255, 140, 0, 0.04) 0%, transparent 40%),
+        var(--nb-bg);
 }

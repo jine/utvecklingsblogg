@@ -6,9 +6,7 @@ export function LoginLink() {
     const { data: session } = authClient.useSession();
 
     const handleLogin = async () => {
-        await authClient.signIn.social({
-            provider: "google",
-        });
+        await authClient.signIn.social({ provider: "google" });
     };
 
     const handleLogout = async () => {
@@ -18,28 +16,27 @@ export function LoginLink() {
     if (session) {
         return (
             <div className="flex flex-col items-center gap-2">
-                <span className="text-sm text-gray-600">
-                    Inloggad som: {session.user.email}
+                <span className="text-sm text-muted">
+                    Inloggad som: {session.user.email} {" - "}
+                    <button
+                        onClick={handleLogout}
+                        type="button"
+                        className="text-sm text-primary hover:text-primary transition-colors cursor-pointer"
+                    >
+                        Logga ut
+                    </button>
                 </span>
-                <button
-                    onClick={handleLogout}
-                    type="button"
-                    className="pointer"
-                >
-                    Logga ut
-                </button>
-                <details className="mt-4">
-                    <pre className="mt-2 p-2 rounded overflow-auto max-h-128 text-left">
-                        {JSON.stringify(session, null, 2)}
-                    </pre>
-                </details>
             </div>
         );
     }
 
     return (
-        <button onClick={handleLogin} type="button" className="pointer">
-            Login with Google
+        <button
+            onClick={handleLogin}
+            type="button"
+            className="text-sm text-muted hover:text-primary transition-colors underline underline-offset-2"
+        >
+            Logga in med Google
         </button>
     );
 }

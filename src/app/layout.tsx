@@ -1,17 +1,21 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { DM_Sans, Space_Grotesk } from "next/font/google";
 import Footer from "@/components/layout/footer";
 import Header from "@/components/layout/header";
 import "./globals.css";
 
-const geistSans = Geist({
-    variable: "--font-geist-sans",
+const spaceGrotesk = Space_Grotesk({
     subsets: ["latin"],
+    weight: ["400", "500", "600", "700"],
+    display: "swap",
+    variable: "--font-space-grotesk",
 });
 
-const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
+const dmSans = DM_Sans({
     subsets: ["latin"],
+    weight: ["400", "500", "600", "700"],
+    display: "swap",
+    variable: "--font-dm-sans",
 });
 
 export const metadata: Metadata = {
@@ -28,9 +32,10 @@ export default function RootLayout({
     return (
         <html lang="sv">
             <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+                className={`${spaceGrotesk.variable} ${dmSans.variable} antialiased`}
             >
-                <div className="container max-w-5xl mx-auto p-6">
+                <div className="atmospheric-bg" />
+                <div className="relative z-10 container max-w-5xl mx-auto p-6">
                     <Header />
                     {children}
                     <Footer />

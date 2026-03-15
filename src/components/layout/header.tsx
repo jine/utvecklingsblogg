@@ -1,25 +1,20 @@
-import Link from "next/link";
+import { Logo } from "@/components/ui/logo";
 import { NewPostLink } from "@/components/ui/new-post-link";
 
 export default function Header() {
     return (
-        <header className="container flex items-center max-w-5xl mb-6">
-            <div className="flex-col">
-                <h1 className="text-2xl font-bold">
-                    <Link href="/">Nattsken</Link>
-                </h1>
-                <h2 className="text-sm text-gray-600">Utvecklingsblogg</h2>
+        <header className="flex items-center justify-between mb-8 py-4 border-b border-border">
+            <div className="flex flex-col items-center">
+                <Logo />
+                <span className="text-muted mt-1">Utvecklingsblogg</span>
             </div>
-
-            <div className="ml-auto flex items-center gap-4">
+            <div className="flex items-center gap-4">
                 <NewPostLink />
-                <div className="max-w-xs w-full">
-                    <input
-                        type="text"
-                        placeholder="Sök inte efter inlägg..."
-                        className="px-4 py-2 w-full border rounded focus:outline-none focus:ring-1"
-                    />
-                </div>
+                <input
+                    type="text"
+                    placeholder="Sök..."
+                    className="w-28 sm:w-40 px-3 py-1.5 bg-surface border border-border rounded text-sm placeholder:text-muted focus:outline-none focus:border-primary"
+                />
             </div>
         </header>
     );

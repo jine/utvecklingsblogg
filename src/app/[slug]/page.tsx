@@ -63,9 +63,9 @@ export default async function PostPage({ params }: PageProps) {
                     {post.summary}
                 </sub>
 
-                <div className="flex items-center gap-4 mb-4">
+                <div className="flex items-center gap-4 mb-4 text-muted">
                     <time
-                        className="text-gray-600"
+                        className="text-muted"
                         dateTime={post.publishDate?.toISOString()}
                     >
                         {formatDate(post.publishDate)}
@@ -73,8 +73,8 @@ export default async function PostPage({ params }: PageProps) {
                     {post.tags.length > 0 && (
                         <>
                             |{" "}
-                            <div className="text-gray-600">
-                                Taggar: <Tags tags={post.tags} />
+                            <div className="text-muted">
+                                <Tags tags={post.tags} />
                             </div>
                         </>
                     )}

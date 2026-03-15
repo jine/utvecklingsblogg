@@ -7,7 +7,7 @@ export function Tags({ tags }: { tags: Tag[] }) {
             {tags.map((tag) => (
                 <span
                     key={tag.id}
-                    className="inline-block px-2 py-0.5 mr-1 rounded bg-gray-600 text-white text-xs"
+                    className="inline-block px-2 py-0.5 mr-1 rounded bg-primary text-white text-xs"
                 >
                     {tag.name}
                 </span>

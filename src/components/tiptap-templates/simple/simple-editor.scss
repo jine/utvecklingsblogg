@@ -34,3 +34,30 @@
     padding: 1rem 1rem 20vh;
   }
 }
+
+/* HTML mode textarea */
+.simple-editor-html-textarea {
+  flex: 1;
+  width: 100%;
+  min-height: 400px;
+  padding: 1.5rem;
+  border: none;
+  outline: none;
+  resize: vertical;
+  font-family: "JetBrains Mono", "Fira Code", "Consolas", monospace;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  background: var(--color-surface, #111111);
+  color: var(--color-text, #e5e5e5);
+  tab-size: 2;
+}
+
+.simple-editor-html-textarea:focus {
+  outline: none;
+}
+
+@media screen and (max-width: 480px) {
+  .simple-editor-html-textarea {
+    padding: 1rem;
+  }
+}

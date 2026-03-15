@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { EditorContent, EditorContext, useEditor } from "@tiptap/react"
+import { Code2Icon } from "@/components/tiptap-icons/code2-icon"
 
 // --- Tiptap Core Extensions ---
 import { StarterKit } from "@tiptap/starter-kit"
@@ -80,10 +81,14 @@ const MainToolbarContent = ({
   onHighlighterClick,
   onLinkClick,
   isMobile,
+  isHtmlMode,
+  onHtmlModeClick,
 }: {
   onHighlighterClick: () => void
   onLinkClick: () => void
   isMobile: boolean
+  isHtmlMode: boolean
+  onHtmlModeClick: () => void
 }) => {
   return (
     <>
@@ -151,6 +156,20 @@ const MainToolbarContent = ({
       <ToolbarGroup>
         <ThemeToggle />
       </ToolbarGroup>
+
+      <ToolbarSeparator />
+
+      <ToolbarGroup>
+        <Button
+          type="button"
+          variant="ghost"
+          onClick={onHtmlModeClick}
+          data-active-state={isHtmlMode ? "on" : "off"}
+          tooltip={isHtmlMode ? "Visuellt läge" : "HTML-läge"}
+        >
+          <Code2Icon className="tiptap-button-icon" />
+        </Button>
+      </ToolbarGroup>
     </>
   )
 }
@@ -193,6 +212,8 @@ export function SimpleEditor({ content, onChange }: { content?: string; onChange
   const [mobileView, setMobileView] = useState<"main" | "highlighter" | "link">(
     "main"
   )
+  const [isHtmlMode, setIsHtmlMode] = useState(false)
+  const [htmlContent, setHtmlContent] = useState(content || "")
   const toolbarRef = useRef<HTMLDivElement>(null)
 
   const editor = useEditor({
@@ -253,6 +274,36 @@ export function SimpleEditor({ content, onChange }: { content?: string; onChange
     }
   }, [isMobile, mobileView])
 
+  // Sync htmlContent when content prop changes and not in HTML mode
+  useEffect(() => {
+    if (!isHtmlMode && content !== undefined) {
+      setHtmlContent(content)
+    }
+  }, [content, isHtmlMode])
+
+  const handleHtmlModeToggle = () => {
+    if (!isHtmlMode) {
+      // Switching to HTML mode - get current HTML from editor
+      const currentHtml = editor?.getHTML() || ""
+      setHtmlContent(currentHtml)
+      setIsHtmlMode(true)
+    } else {
+      // Switching back to visual mode - set content from textarea
+      if (editor) {
+        editor.commands.setContent(htmlContent, { parseOptions: { preserveWhitespace: 'full' } })
+      }
+      setIsHtmlMode(false)
+      // Trigger onChange with the new HTML
+      onChange?.(htmlContent)
+    }
+  }
+
+  const handleHtmlChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newHtml = e.target.value
+    setHtmlContent(newHtml)
+    onChange?.(newHtml)
+  }
+
   return (
     <div className="simple-editor-wrapper">
       <EditorContext.Provider value={{ editor }}>
@@ -271,6 +322,8 @@ export function SimpleEditor({ content, onChange }: { content?: string; onChange
               onHighlighterClick={() => setMobileView("highlighter")}
               onLinkClick={() => setMobileView("link")}
               isMobile={isMobile}
+              isHtmlMode={isHtmlMode}
+              onHtmlModeClick={handleHtmlModeToggle}
             />
           ) : (
             <MobileToolbarContent
@@ -280,11 +333,23 @@ export function SimpleEditor({ content, onChange }: { content?: string; onChange
           )}
         </Toolbar>
 
-        <EditorContent
-          editor={editor}
-          role="presentation"
-          className="simple-editor-content"
-        />
+        {isHtmlMode ? (
+          <div className="simple-editor-content">
+            <textarea
+              value={htmlContent}
+              onChange={handleHtmlChange}
+              className="simple-editor-html-textarea"
+              aria-label="HTML-innehåll"
+              spellCheck={false}
+            />
+          </div>
+        ) : (
+          <EditorContent
+            editor={editor}
+            role="presentation"
+            className="simple-editor-content"
+          />
+        )}
       </EditorContext.Provider>
     </div>
   )

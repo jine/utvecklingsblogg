@@ -34,7 +34,7 @@ export function LoginLink() {
         <button
             onClick={handleLogin}
             type="button"
-            className="text-sm text-muted hover:text-primary transition-colors underline underline-offset-2"
+            className="text-sm text-muted hover:text-primary transition-colors cursor-pointer underline-offset-2"
         >
             Logga in med Google
         </button>

@@ -1,5 +1,7 @@
+import { Suspense } from "react";
 import { Logo } from "@/components/ui/logo";
 import { NewPostLink } from "@/components/ui/new-post-link";
+import { SearchInput } from "@/components/ui/search-input";
 
 export default function Header() {
     return (
@@ -10,11 +12,13 @@ export default function Header() {
             </div>
             <div className="flex items-center gap-4">
                 <NewPostLink />
-                <input
-                    type="text"
-                    placeholder="Sök..."
-                    className="w-28 sm:w-40 px-3 py-1.5 bg-surface border border-border rounded text-sm placeholder:text-muted focus:outline-none focus:border-primary"
-                />
+                <Suspense
+                    fallback={
+                        <div className="w-32 sm:w-44 h-8 bg-surface border border-border rounded" />
+                    }
+                >
+                    <SearchInput />
+                </Suspense>
             </div>
         </header>
     );

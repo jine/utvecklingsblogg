@@ -2,7 +2,17 @@ import type { Post } from "@/generated/prisma";
 import PostCard from "./post-card";
 
 export default function PostGrid({ posts }: { posts: Post[] }) {
-    if (posts.length === 0) return null;
+    if (posts.length === 0) {
+        return (
+            <div className="text-center py-16">
+                <p className="text-muted text-lg">Inga inlägg hittades.</p>
+                <p className="text-sm text-muted mt-2">
+                    Vänligen försök igen med en annan sökterm eller kolla
+                    tillbaka senare när nya inlägg har publicerats.
+                </p>
+            </div>
+        );
+    }
 
     // Extract the first post from the posts array to feature it, and keep the rest for the grid
     const [featuredPost, ...blogPosts] = posts;

@@ -41,6 +41,31 @@ export async function getAllPosts(): Promise<Post[]> {
     });
 }
 
+export async function searchPosts(query: string): Promise<Post[]> {
+    const searchTerm = query.trim();
+    if (!searchTerm) return getAllPosts();
+
+    return prisma.post.findMany({
+        where: {
+            published: true,
+            OR: [
+                { title: { contains: searchTerm, mode: "insensitive" } },
+                { summary: { contains: searchTerm, mode: "insensitive" } },
+                { htmlContent: { contains: searchTerm, mode: "insensitive" } },
+                {
+                    tags: {
+                        some: {
+                            name: { contains: searchTerm, mode: "insensitive" },
+                        },
+                    },
+                },
+            ],
+        },
+        orderBy: { publishDate: "desc" },
+        include: { tags: true },
+    });
+}
+
 export async function createPost(formData: FormData) {
     // Normalize slug from form data
     const rawSlug = formData.get("slug") as string;
@@ -51,8 +76,12 @@ export async function createPost(formData: FormData) {
         .object({
             slug: z
                 .string()
-                .min(1, "Du måste ange en slug (sökmotorvänlig sökväg)"),
-            title: z.string().min(1, "Du måste ange en titel"),
+                .min(1, "Du måste ange en slug (sökmotorvänlig sökväg)")
+                .max(100, "Slug får inte vara längre än 100 tecken"),
+            title: z
+                .string()
+                .min(1, "Du måste ange en titel")
+                .max(100, "Titel får inte vara längre än 100 tecken"),
             htmlContent: z.string().min(1, "Du måste skriva något innehåll!"),
             summary: z
                 .string()
@@ -123,8 +152,12 @@ export async function updatePost(formData: FormData) {
         .object({
             slug: z
                 .string()
-                .min(1, "Du måste ange en slug (sökmotorvänlig sökväg)"),
-            title: z.string().min(1, "Du måste ange en titel"),
+                .min(1, "Du måste ange en slug (sökmotorvänlig sökväg)")
+                .max(100, "Slug får inte vara längre än 100 tecken"),
+            title: z
+                .string()
+                .min(1, "Du måste ange en titel")
+                .max(100, "Titel får inte vara längre än 100 tecken"),
             htmlContent: z.string().min(1, "Du måste skriva något innehåll!"),
             summary: z
                 .string()

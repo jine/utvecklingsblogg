@@ -1,6 +1,13 @@
+import { headers } from "next/headers";
 import PostGrid from "@/components/layout/post-grid";
 import type { Post } from "@/generated/prisma";
-import { getAllPosts, searchPosts } from "@/lib/posts";
+import { auth } from "@/lib/auth";
+import {
+    getAllPosts,
+    getAllPostsWithUnpublished,
+    searchPosts,
+    searchPostsWithUnpublished,
+} from "@/lib/posts";
 
 interface HomePageProps {
     searchParams: Promise<{ q?: string }>;
@@ -10,9 +17,17 @@ export default async function Home({ searchParams }: HomePageProps) {
     const params = await searchParams;
     const query = params.q;
 
+    // Check if user is logged in
+    const session = await auth.api.getSession({ headers: await headers() });
+    const isLoggedIn = !!session;
+
     const posts: Post[] = query
-        ? await searchPosts(query)
-        : await getAllPosts();
+        ? isLoggedIn
+            ? await searchPostsWithUnpublished(query)
+            : await searchPosts(query)
+        : isLoggedIn
+          ? await getAllPostsWithUnpublished()
+          : await getAllPosts();
 
     return (
         <>
@@ -28,7 +43,7 @@ export default async function Home({ searchParams }: HomePageProps) {
                     )}
                 </div>
             )}
-            <PostGrid posts={posts} />
+            <PostGrid posts={posts} isLoggedIn={isLoggedIn} />
         </>
     );
 }

@@ -1,7 +1,12 @@
 import type { Post } from "@/generated/prisma";
 import PostCard from "./post-card";
 
-export default function PostGrid({ posts }: { posts: Post[] }) {
+interface PostGridProps {
+    posts: Post[];
+    isLoggedIn?: boolean;
+}
+
+export default function PostGrid({ posts, isLoggedIn }: PostGridProps) {
     if (posts.length === 0) {
         return (
             <div className="text-center py-16">
@@ -21,13 +26,17 @@ export default function PostGrid({ posts }: { posts: Post[] }) {
         <div className="grid gap-6">
             {/* Featured post - full width */}
             <div className="w-full group">
-                <PostCard post={featuredPost} />
+                <PostCard post={featuredPost} isLoggedIn={isLoggedIn} />
             </div>
 
             {/* Show posts in column, but make 3 col grid on desktop */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 group">
                 {blogPosts.map((post: Post) => (
-                    <PostCard key={post.id} post={post} />
+                    <PostCard
+                        key={post.id}
+                        post={post}
+                        isLoggedIn={isLoggedIn}
+                    />
                 ))}
             </div>
         </div>

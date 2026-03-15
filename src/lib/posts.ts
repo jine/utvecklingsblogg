@@ -41,6 +41,12 @@ export async function getAllPosts(): Promise<Post[]> {
     });
 }
 
+export async function getAllPostsWithUnpublished(): Promise<Post[]> {
+    return prisma.post.findMany({
+        orderBy: { createdAt: "desc" },
+    });
+}
+
 export async function searchPosts(query: string): Promise<Post[]> {
     const searchTerm = query.trim();
     if (!searchTerm) return getAllPosts();
@@ -62,6 +68,32 @@ export async function searchPosts(query: string): Promise<Post[]> {
             ],
         },
         orderBy: { publishDate: "desc" },
+        include: { tags: true },
+    });
+}
+
+export async function searchPostsWithUnpublished(
+    query: string,
+): Promise<Post[]> {
+    const searchTerm = query.trim();
+    if (!searchTerm) return getAllPostsWithUnpublished();
+
+    return prisma.post.findMany({
+        where: {
+            OR: [
+                { title: { contains: searchTerm, mode: "insensitive" } },
+                { summary: { contains: searchTerm, mode: "insensitive" } },
+                { htmlContent: { contains: searchTerm, mode: "insensitive" } },
+                {
+                    tags: {
+                        some: {
+                            name: { contains: searchTerm, mode: "insensitive" },
+                        },
+                    },
+                },
+            ],
+        },
+        orderBy: { createdAt: "desc" },
         include: { tags: true },
     });
 }

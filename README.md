@@ -4,6 +4,8 @@
 
 Projektet är för https://github.com/Lexicon-Utbildning-Front-end-2025-2026/individuellt-arbete
 
+Live: https://blogg.nattsken.se
+
 ## 📋 Projektbeskrivning
 
 ### Intro
@@ -24,21 +26,62 @@ Utvecklingsbloggen ska anpassas så att färger, typografi och känsla passar **
 - [Cloudflare: Blogg](https://blog.cloudflare.com) 
 - [Cloudflare: Individuell bloggpost](https://blog.cloudflare.com/vinext/)
 
+## 🚀 Installation
 
-### Tekniker
-Inloggning sker med enkel Google OAuth där jag enbart tillåter personer från domänen jine.se att logga in. Det är enkelt löst genom att inte tillåta OAuth från andra Google-konton än inom domänen.
+### Förkrav
+- [Node.js](https://nodejs.org/) (version 20+)
+- [PostgreSQL](https://www.postgresql.org/) databas (eller [Neon](https://neon.tech) för serverless)
+- Google OAuth credentials (valfritt, endast för admin-funktionalitet)
 
-Databasen för **Nattsken** är PostgreSQL. Av säkerhetsskäl och enkelhet valde jag att använda Neon (serverless PostgreSQL) i detta projekt, dvs hålla databasen för bloggposter helt separat. 
-Jag valde Neon just för att det är mer likt _vanlig_ Postgres än t.ex. Supabase.
+### Steg-för-steg
 
-Det gör även att jag slipper migrationsfiler för att hålla riktiga databasen i rätt stadie, samt håller utvecklingsprocesserna separata. Huvudprojektet använder sig av websockets, realtids-data och platsinformation, så det är av självklara skäl som denna plattform hålls separat. 
+1. **Klona repot**
+   ```bash
+   git clone <repo-url>
+   cd utvecklingsblogg
+   ```
 
-Trots den separata databasen och att det bara är jag som kan logga in m.h.a OAuth, så är det viktigt att all postdata valideras med Zod när jag postar något.
+2. **Installera dependencies**
+   ```bash
+   npm install
+   ```
 
-Admin-delen är en simpel CRUD via API-routes som i sin tur kommunicerar med Neon, inget separat backend utanför Next.js behövs.
-Men jag vill kunna bifoga bilder (eller egentligen klistra in) bilder direkt i admin/WYSIWYG-gränssnittet.
+3. **Konfigurera miljövariabler**
+   ```bash
+   cp .env.example .env
+   ```
+   
+   Redigera `.env` och fyll i:
+   - `DATABASE_URL` - Din PostgreSQL connection string
+   - `GOOGLE_CLIENT_ID` & `GOOGLE_CLIENT_SECRET` - Från Google Cloud Console (valfritt)
+   - `BETTER_AUTH_SECRET` - Generera en stark slumpmässig sträng
+   - `NEXT_PUBLIC_APP_URL` - Din lokala URL (t.ex. `http://localhost:3000`)
 
-Av enkelhetsskäl hostas den på samma plattform som projektet, en egen-hostad Coolify (som fungerar ungefär som Vercel).
+4. **Kör databasmigreringar**
+   ```bash
+   npx prisma migrate dev
+   ```
+
+5. **Starta utvecklingsservern**
+   ```bash
+   npm run dev
+   ```
+
+   Besök [http://localhost:3000](http://localhost:3000)
+
+### Bygga för produktion
+
+```bash
+npm run build
+npm start
+```
+
+### Docker
+
+```bash
+docker build -t utvecklingsblogg .
+docker run -p 3000:3000 --env-file .env utvecklingsblogg
+```
 
 ## 🛠️ Tech-stack
 
@@ -46,10 +89,11 @@ Av enkelhetsskäl hostas den på samma plattform som projektet, en egen-hostad C
 - **Rich text-editor**: Tiptap
 - **Styling**: Tailwind CSS (**anpassat** efter Nattskens designsystem)
 - **Databas**: Neon (Serverless PostgreSQL), Prisma ORM
-- **Autentisering**: Auth.js + Google OAuth (endast @jine.se)
+- **Autentisering**: Better Auth + Google OAuth (endast @jine.se)
 - **Validering**: Zod
-- **Bildhantering**: Lokal uppladdning i admin (kommer specificeras närmare)
+- **Bildhantering**: Lokal uppladdning i admin
 - **Deployment**: Self-hosted Coolify
+- **Testing**: Playwright (E2E)
 
 ## 📦 Projektdelar
 
@@ -58,18 +102,47 @@ Av enkelhetsskäl hostas den på samma plattform som projektet, en egen-hostad C
 - Individuella, snyggt formaterade bloggposter (HTML)
 - Footer per-post med Postat när/av
 - Responsiv design som matchar Nattskens vibe, med extra fokus på Mobile First
-- Enkel sökning efter inlägg (EXTRA: Kolla på [fuzzystrmatch](https://neon.com/docs/extensions/fuzzystrmatch))
+- Enkel sökning efter inlägg
 
 ### Admin (skyddad med inloggning)
 - Full CRUD för bloggposter
-- Rich text med [Tiptap](https://tiptap.dev/) + möjlighet att klistra in eller ladda upp bilder lokalt
+- Rich text med [Tiptap](https://tiptap.dev/) + möjlighet att klistra in bilder
 - Strikt validering med [Zod](https://zod.dev/) på all indata
 - Google OAuth med domänbegränsning (jine.se)
+- Visuell markering av opublicerade inlägg (utkast)
 
 ### Övrigt
 - Neon databas ([Neon](https://neon.com/))
-. [Prisma ORM](https://www.prisma.io/)
-- [Dockerfile](https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile) för att få snabbare deployment i Coolify
+- [Prisma ORM](https://www.prisma.io/)
+- [Dockerfile](https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile) för deployment
+
+## 🧪 Tester
+
+### Köra E2E-tester med Playwright
+
+```bash
+# Kör tester i UI-läge
+npx playwright test --ui
+
+# Kör alla tester
+npx playwright test
+
+# Kör tester i specifik browser
+npx playwright test --project=chromium
+```
+
+## 📸 Screenshot
+
+![Screenshot av blogg.nattsken.se](public/screenshot.png)
+
+## 👤 Om mig
+
+**Jim Nelin**
+
+- 📧 [jim@jine.se](mailto:jim@jine.se)
+- 🐙 [GitHub: @jine](https://github.com/jine)
+- 🌐 [jimnelin.com](https://jimnelin.com)
+- 💼 [LinkedIn: jimnelin](https://www.linkedin.com/in/jimnelin/)
 
 ## 📅 Projektplanering (Lexicon)
 

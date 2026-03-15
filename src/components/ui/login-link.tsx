@@ -1,9 +1,11 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 
 export function LoginLink() {
     const { data: session } = authClient.useSession();
+    const router = useRouter();
 
     const handleLogin = async () => {
         await authClient.signIn.social({ provider: "google" });
@@ -11,6 +13,8 @@ export function LoginLink() {
 
     const handleLogout = async () => {
         await authClient.signOut();
+        router.push("/");
+        router.refresh();
     };
 
     if (session) {

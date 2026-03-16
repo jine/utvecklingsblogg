@@ -1,10 +1,10 @@
-# 🌙 Nattsken - Utvecklingsblogg
+#  Utvecklingsblogg - Nattsken
 
 **Ett individuellt arbete för Lexicon Front-end-utbildningen 2025-2026**
 
 Projekt för https://github.com/Lexicon-Utbildning-Front-end-2025-2026/individuellt-arbete
 
-Live: https://blogg.nattsken.se
+Live version: https://blogg.nattsken.se
 
 ## 📋 Projektbeskrivning
 
@@ -41,13 +41,13 @@ Utvecklingsbloggen ska anpassas så att färger, typografi och känsla passar **
 ## 📦 Projektdelar
 
 ### Publik del
-- Publicerade inlägg i grid 
+- Publicerade inlägg i grid
 - Individuella, snyggt formaterade bloggposter (HTML)
-- Footer per-post med Postat när/med taggar
+- Postat när och med taggar
 - Responsiv design som matchar Nattskens vibe, med extra fokus på Mobile First
 - Enkel sökning efter inlägg
 
-### Admin (skyddad med inloggning)
+### Administration (skyddad med inloggning)
 - Full CRUD för bloggposter
 - Rich text med [Tiptap](https://tiptap.dev/) + möjlighet att klistra in bilder
 - Strikt validering med [Zod](https://zod.dev/) på all indata
@@ -136,7 +136,7 @@ npx playwright test --project=chromium
 
 ## 👤 Om mig / Övrigt
 
-Projektet är utvecklat av mig - **Jim Nelin** som ett "mini projekt" för min portfolio. Läs mer om kraven på https://github.com/Lexicon-Utbildning-Front-end-2025-2026/individuellt-arbete.
+Projektet är utvecklat av mig - **Jim Nelin** som ett "mini projekt" på ca 2 veckor inkl. planering/demo för min portfolio. Läs mer om kraven på https://github.com/Lexicon-Utbildning-Front-end-2025-2026/individuellt-arbete.
 
 - E-post: [jim@jine.se](mailto:jim@jine.se)
 - GitHub: [@jine](https://github.com/jine)

@@ -26,6 +26,39 @@ Utvecklingsbloggen ska anpassas så att färger, typografi och känsla passar **
 - [Cloudflare: Blogg](https://blog.cloudflare.com) 
 - [Cloudflare: Individuell bloggpost](https://blog.cloudflare.com/vinext/)
 
+## 🛠️ Tech-stack
+
+- **Framework**: Next.js 16 (App Router) + TypeScript
+- **Rich text-editor**: Tiptap
+- **Styling**: Tailwind CSS (**anpassat** efter Nattskens designsystem)
+- **Databas**: Neon (Serverless PostgreSQL), Prisma ORM
+- **Autentisering**: Better Auth + Google OAuth (endast @jine.se)
+- **Validering**: Zod
+- **Bildhantering**: Lokal uppladdning i admin
+- **Deployment**: Self-hosted Coolify (Docker)
+- **Testing**: Playwright (E2E)
+
+## 📦 Projektdelar
+
+### Publik del
+- Publicerade inlägg i grid 
+- Individuella, snyggt formaterade bloggposter (HTML)
+- Footer per-post med Postat när/med taggar
+- Responsiv design som matchar Nattskens vibe, med extra fokus på Mobile First
+- Enkel sökning efter inlägg
+
+### Admin (skyddad med inloggning)
+- Full CRUD för bloggposter
+- Rich text med [Tiptap](https://tiptap.dev/) + möjlighet att klistra in bilder
+- Strikt validering med [Zod](https://zod.dev/) på all indata
+- Google OAuth med domänbegränsning (jine.se)
+- Visuell markering av opublicerade inlägg (utkast)
+
+### Övrigt
+- Neon databas ([Neon](https://neon.com/))
+- [Prisma ORM](https://www.prisma.io/)
+- [Dockerfile](https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile) för deployment
+
 ## 🚀 Installation
 
 ### Förkrav
@@ -68,53 +101,6 @@ Utvecklingsbloggen ska anpassas så att färger, typografi och känsla passar **
    ```
 
    Besök [http://localhost:3000](http://localhost:3000)
-
-### Bygga för produktion
-
-```bash
-npm run build
-npm start
-```
-
-### Docker
-
-```bash
-docker build -t utvecklingsblogg .
-docker run -p 3000:3000 --env-file .env utvecklingsblogg
-```
-
-## 🛠️ Tech-stack
-
-- **Framework**: Next.js 16 (App Router) + TypeScript
-- **Rich text-editor**: Tiptap
-- **Styling**: Tailwind CSS (**anpassat** efter Nattskens designsystem)
-- **Databas**: Neon (Serverless PostgreSQL), Prisma ORM
-- **Autentisering**: Better Auth + Google OAuth (endast @jine.se)
-- **Validering**: Zod
-- **Bildhantering**: Lokal uppladdning i admin
-- **Deployment**: Self-hosted Coolify (Docker)
-- **Testing**: Playwright (E2E)
-
-## 📦 Projektdelar
-
-### Publik del
-- Publicerade inlägg i grid 
-- Individuella, snyggt formaterade bloggposter (HTML)
-- Footer per-post med Postat när/med taggar
-- Responsiv design som matchar Nattskens vibe, med extra fokus på Mobile First
-- Enkel sökning efter inlägg
-
-### Admin (skyddad med inloggning)
-- Full CRUD för bloggposter
-- Rich text med [Tiptap](https://tiptap.dev/) + möjlighet att klistra in bilder
-- Strikt validering med [Zod](https://zod.dev/) på all indata
-- Google OAuth med domänbegränsning (jine.se)
-- Visuell markering av opublicerade inlägg (utkast)
-
-### Övrigt
-- Neon databas ([Neon](https://neon.com/))
-- [Prisma ORM](https://www.prisma.io/)
-- [Dockerfile](https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile) för deployment
 
 ## 🧪 Tester
 

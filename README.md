@@ -41,13 +41,13 @@ Utvecklingsbloggen ska anpassas så att färger, typografi och känsla passar **
 ## 📦 Projektdelar
 
 ### Publik del
-- Publicerade inlägg i grid 
+- Publicerade inlägg i grid
 - Individuella, snyggt formaterade bloggposter (HTML)
-- Footer per-post med Postat när/med taggar
+- Postat när och med taggar
 - Responsiv design som matchar Nattskens vibe, med extra fokus på Mobile First
 - Enkel sökning efter inlägg
 
-### Admin (skyddad med inloggning)
+### Administration (skyddad med inloggning)
 - Full CRUD för bloggposter
 - Rich text med [Tiptap](https://tiptap.dev/) + möjlighet att klistra in bilder
 - Strikt validering med [Zod](https://zod.dev/) på all indata

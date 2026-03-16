@@ -1,12 +1,12 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { EditorContent, EditorContext, useEditor } from "@tiptap/react"
 import { Code2Icon } from "@/components/tiptap-icons/code2-icon"
 
 // --- Tiptap Core Extensions ---
 import { StarterKit } from "@tiptap/starter-kit"
-import { Image } from "@tiptap/extension-image"
+import { FileHandler } from "@tiptap/extension-file-handler"
 import { TaskItem, TaskList } from "@tiptap/extension-list"
 import { TextAlign } from "@tiptap/extension-text-align"
 import { Typography } from "@tiptap/extension-typography"
@@ -27,6 +27,7 @@ import {
 // --- Tiptap Node ---
 import { ImageUploadNode } from "@/components/tiptap-node/image-upload-node/image-upload-node-extension"
 import { HorizontalRule } from "@/components/tiptap-node/horizontal-rule-node/horizontal-rule-node-extension"
+import { CustomImage } from "@/components/tiptap-node/image-node/image-node-extension"
 import "@/components/tiptap-node/blockquote-node/blockquote-node.scss"
 import "@/components/tiptap-node/code-block-node/code-block-node.scss"
 import "@/components/tiptap-node/horizontal-rule-node/horizontal-rule-node.scss"
@@ -70,6 +71,9 @@ import { ThemeToggle } from "@/components/tiptap-templates/simple/theme-toggle"
 
 // --- Lib ---
 import { handleImageUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils"
+
+// --- Hooks ---
+import { useImageUpload } from "@/hooks/use-image-upload"
 
 // --- Styles ---
 import "@/components/tiptap-templates/simple/simple-editor.scss"
@@ -214,7 +218,14 @@ export function SimpleEditor({ content, onChange }: { content?: string; onChange
   )
   const [isHtmlMode, setIsHtmlMode] = useState(false)
   const [htmlContent, setHtmlContent] = useState(content || "")
+  const [uploadError, setUploadError] = useState<string | null>(null)
   const toolbarRef = useRef<HTMLDivElement>(null)
+
+  const handleUploadError = useCallback((error: { message: string; file?: string }) => {
+    setUploadError(`${error.message}${error.file ? ` (${error.file})` : ''}`)
+    // Clear error after 5 seconds
+    setTimeout(() => setUploadError(null), 5000)
+  }, [])
 
   const editor = useEditor({
     immediatelyRender: false,
@@ -240,17 +251,36 @@ export function SimpleEditor({ content, onChange }: { content?: string; onChange
       TaskList,
       TaskItem.configure({ nested: true }),
       Highlight.configure({ multicolor: true }),
-      Image,
+      CustomImage,
       Typography,
       Superscript,
       Subscript,
       Selection,
+      FileHandler.configure({
+        allowedMimeTypes: ['image/jpeg', 'image/png', 'image/gif', 'image/webp'],
+        onDrop: (editor, files, pos) => {
+          // Don't handle if already uploading
+          if (isUploading) return
+          uploadFiles(Array.from(files), pos)
+        },
+        onPaste: (editor, files, htmlContent) => {
+          // If htmlContent is provided (e.g., copying from other apps), let the default handler work
+          if (htmlContent) return false
+          // Don't handle if already uploading
+          if (isUploading) return false
+          uploadFiles(Array.from(files))
+          return true
+        },
+      }),
       ImageUploadNode.configure({
         accept: "image/*",
         maxSize: MAX_FILE_SIZE,
         limit: 3,
         upload: handleImageUpload,
-        onError: (error) => console.error("Upload failed:", error),
+        onError: (error) => {
+          console.error("Upload failed:", error)
+          handleUploadError({ message: error.message })
+        },
       }),
     ],
 
@@ -259,8 +289,17 @@ export function SimpleEditor({ content, onChange }: { content?: string; onChange
     // callback to pass the updated HTML content back to the parent component.
     content: content,
     onUpdate({ editor }) {
-      onChange?.(editor.getHTML())
+      // Defer state update to avoid flushSync warning during React render
+      requestAnimationFrame(() => {
+        onChange?.(editor.getHTML())
+      })
     },
+  })
+
+  // Hook for handling drag-drop and paste uploads with error handling
+  const { isUploading, uploadProgress, currentFile, uploadFiles } = useImageUpload({
+    editor,
+    onError: handleUploadError,
   })
 
   const rect = useCursorVisibility({
@@ -280,6 +319,16 @@ export function SimpleEditor({ content, onChange }: { content?: string; onChange
       setHtmlContent(content)
     }
   }, [content, isHtmlMode])
+
+  // Clear upload error when editor is focused
+  useEffect(() => {
+    if (!editor) return
+    const handleFocus = () => setUploadError(null)
+    editor.on('focus', handleFocus)
+    return () => {
+      editor.off('focus', handleFocus)
+    }
+  }, [editor])
 
   const handleHtmlModeToggle = () => {
     if (!isHtmlMode) {
@@ -306,6 +355,70 @@ export function SimpleEditor({ content, onChange }: { content?: string; onChange
 
   return (
     <div className="simple-editor-wrapper">
+      {/* Upload Error Toast */}
+      {uploadError && (
+        <div 
+          className="upload-error-toast"
+          role="alert"
+          style={{
+            position: 'absolute',
+            top: '10px',
+            right: '10px',
+            background: 'var(--tt-error-bg, #fee2e2)',
+            color: 'var(--tt-error-text, #dc2626)',
+            padding: '12px 16px',
+            borderRadius: '6px',
+            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+            zIndex: 50,
+            maxWidth: '300px',
+            fontSize: '14px',
+          }}
+        >
+          <strong>Upload Failed</strong>
+          <p style={{ margin: '4px 0 0 0' }}>{uploadError}</p>
+          <button 
+            onClick={() => setUploadError(null)}
+            style={{
+              position: 'absolute',
+              top: '4px',
+              right: '4px',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: '16px',
+              color: 'inherit',
+            }}
+            aria-label="Dismiss error"
+          >
+            ×
+          </button>
+        </div>
+      )}
+      
+      {/* Upload Progress Indicator */}
+      {isUploading && (
+        <div 
+          className="upload-progress-indicator"
+          style={{
+            position: 'absolute',
+            top: '10px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            background: 'var(--tt-bg, white)',
+            padding: '8px 16px',
+            borderRadius: '20px',
+            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+            zIndex: 50,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            fontSize: '14px',
+          }}
+        >
+          <span>Uploading {currentFile}...</span>
+          <span>{uploadProgress}%</span>
+        </div>
+      )}
       <EditorContext.Provider value={{ editor }}>
         <Toolbar
           ref={toolbarRef}

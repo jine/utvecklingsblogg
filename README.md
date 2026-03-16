@@ -22,7 +22,7 @@ Designen/Layout tas fram med Figma, men ska utgå ifrån inspirationslänkarna n
 
 Utvecklingsbloggen ska anpassas så att färger, typografi och känsla passar **Nattsken** i övrigt - enligt existerande designdokument.
 
-#### 💡 Inspiration
+#### Inspiration
 - [Cloudflare: Blogg](https://blog.cloudflare.com) 
 - [Cloudflare: Individuell bloggpost](https://blog.cloudflare.com/vinext/)
 
@@ -54,7 +54,7 @@ Utvecklingsbloggen ska anpassas så att färger, typografi och känsla passar **
    Redigera `.env` och fyll i:
    - `DATABASE_URL` - Din PostgreSQL connection string
    - `GOOGLE_CLIENT_ID` & `GOOGLE_CLIENT_SECRET` - Från Google Cloud Console (valfritt)
-   - `BETTER_AUTH_SECRET` - Generera en stark slumpmässig sträng
+   - `BETTER_AUTH_SECRET` - Generera en stark slumpmässig sträng, används för Better Auth
    - `NEXT_PUBLIC_APP_URL` - Din lokala URL (t.ex. `http://localhost:3000`)
 
 4. **Kör databasmigreringar**
@@ -92,7 +92,7 @@ docker run -p 3000:3000 --env-file .env utvecklingsblogg
 - **Autentisering**: Better Auth + Google OAuth (endast @jine.se)
 - **Validering**: Zod
 - **Bildhantering**: Lokal uppladdning i admin
-- **Deployment**: Self-hosted Coolify
+- **Deployment**: Self-hosted Coolify (Docker)
 - **Testing**: Playwright (E2E)
 
 ## 📦 Projektdelar
@@ -137,18 +137,9 @@ npx playwright test --project=chromium
 
 ![Screenshot av blogg.nattsken.se](public/screenshot.png)
 
-## 👤 Om mig
-
-**Jim Nelin**
-
-- 📧 [jim@jine.se](mailto:jim@jine.se)
-- 🐙 [GitHub: @jine](https://github.com/jine)
-- 🌐 [jimnelin.com](https://jimnelin.com)
-- 💼 [LinkedIn: jimnelin](https://www.linkedin.com/in/jimnelin/)
-
 ## 📅 Projektplanering (Lexicon)
 
-- **GitHub Projects + Product Backlog**: [Projekt Utvecklingsblogg](https://github.com/users/jine/projects/5)
+- **GitHub Projects + Project Backlog**: [Projekt Utvecklingsblogg](https://github.com/users/jine/projects/5)
 - **Wireframes / Designskiss**: [Utkast 1](https://www.figma.com/make/ni24Umd4pqnUxOT8V821xO/Develop-Blog-for-Nattsken?t=uumlYSsbnfbGeXpY-1)
 
 ### Nattsken-referensdokument (Ej publika)
@@ -156,3 +147,13 @@ npx playwright test --project=chromium
 - **README.md**: https://github.com/jine/nattsken.se/blob/main/README.md
 - **API.md**: https://github.com/jine/nattsken.se/blob/main/API.md
 - **ARCHITECTURE.md**: https://github.com/jine/nattsken.se/blob/main/ARCHITECTURE.md
+
+## 👤 Om mig / Övrigt
+
+Projektet är utvecklat av mig - **Jim Nelin** som ett "mini projekt" för min portfolio. Läs mer om kraven på https://github.com/Lexicon-Utbildning-Front-end-2025-2026/individuellt-arbete.
+
+- [E-post: jim@jine.se](mailto:jim@jine.se)
+- [GitHub: @jine](https://github.com/jine)
+- [Websajt/Porfolio: jimnelin.com](https://jimnelin.com)
+- [LinkedIn: Jim Nelin](https://www.linkedin.com/in/jimnelin/)
+

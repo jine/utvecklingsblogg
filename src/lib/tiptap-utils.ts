@@ -13,7 +13,7 @@ import {
   type NodeWithPos,
 } from "@tiptap/react"
 
-export const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB
+export const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10MB
 
 export const MAC_SYMBOLS: Record<string, string> = {
   mod: "⌘",
@@ -353,6 +353,7 @@ export function selectionWithinConvertibleTypes(
 
 /**
  * Handles image upload with progress tracking and abort capability
+ * Uses XMLHttpRequest for real-time progress updates
  * @param file The file to upload
  * @param onProgress Optional callback for tracking upload progress
  * @param abortSignal Optional AbortSignal for cancelling the upload
@@ -374,17 +375,62 @@ export const handleImageUpload = async (
     )
   }
 
-  // For demo/testing: Simulate upload progress. In production, replace the following code
-  // with your own upload implementation.
-  for (let progress = 0; progress <= 100; progress += 10) {
-    if (abortSignal?.aborted) {
-      throw new Error("Upload cancelled")
-    }
-    await new Promise((resolve) => setTimeout(resolve, 500))
-    onProgress?.({ progress })
-  }
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest()
+    const formData = new FormData()
+    formData.append("file", file)
 
-  return "/images/tiptap-ui-placeholder-image.jpg"
+    // Track upload progress
+    xhr.upload.addEventListener("progress", (event) => {
+      if (event.lengthComputable) {
+        const progress = Math.round((event.loaded / event.total) * 100)
+        onProgress?.({ progress })
+      }
+    })
+
+    // Handle completion
+    xhr.addEventListener("load", () => {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        try {
+          const data = JSON.parse(xhr.responseText)
+          if (data.url) {
+            resolve(data.url)
+          } else {
+            reject(new Error("Upload failed: No URL returned"))
+          }
+        } catch {
+          reject(new Error("Upload failed: Invalid response"))
+        }
+      } else {
+        try {
+          const errorData = JSON.parse(xhr.responseText)
+          reject(new Error(errorData.error || `Upload failed: ${xhr.statusText}`))
+        } catch {
+          reject(new Error(`Upload failed: ${xhr.statusText}`))
+        }
+      }
+    })
+
+    // Handle errors
+    xhr.addEventListener("error", () => {
+      reject(new Error("Upload failed: Network error"))
+    })
+
+    xhr.addEventListener("abort", () => {
+      reject(new Error("Upload cancelled"))
+    })
+
+    // Handle abort signal
+    if (abortSignal) {
+      abortSignal.addEventListener("abort", () => {
+        xhr.abort()
+      })
+    }
+
+    // Start upload
+    xhr.open("POST", "/api/upload/image")
+    xhr.send(formData)
+  })
 }
 
 type ProtocolOptions = {

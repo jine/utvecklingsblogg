@@ -86,7 +86,7 @@ Utvecklingsbloggen ska anpassas så att färger, typografi och känsla passar **
    
    Redigera `.env` och fyll i:
    - `DATABASE_URL` - Din PostgreSQL connection string
-   - `GOOGLE_CLIENT_ID` & `GOOGLE_CLIENT_SECRET` - Från Google Cloud Console (valfritt)
+   - `GOOGLE_CLIENT_ID` & `GOOGLE_CLIENT_SECRET` - Från Google Cloud Console
    - `BETTER_AUTH_SECRET` - Generera en stark slumpmässig sträng, används för Better Auth
    - `NEXT_PUBLIC_APP_URL` - Din lokala URL (t.ex. `http://localhost:3000`)
 

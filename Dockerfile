@@ -72,6 +72,9 @@ RUN --mount=type=cache,target=/app/.next/cache \
 
 FROM node:${NODE_VERSION} AS runner
 
+# Install curl for health checks
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+
 # Set working directory
 WORKDIR /app
 
@@ -95,6 +98,11 @@ USER node
 
 # Expose port 3000 to allow HTTP traffic
 EXPOSE 3000
+
+# Health check for Coolify - checks if the application is responding
+# Interval: 30s, Timeout: 3s, Start period: 5s, Retries: 3
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:3000/ || exit 1
 
 # Start Next.js standalone server
 CMD ["node", "server.js"]

@@ -32,4 +32,80 @@
   .tiptap-thread img {
     margin: 0;
   }
+
+  // Custom image node view styles
+  .image-node-view {
+    margin: 2rem 0;
+    position: relative;
+
+    &.selected .tiptap-image {
+      outline: 0.125rem solid var(--tt-brand-color-500);
+    }
+  }
+
+  .tiptap-image-figure {
+    margin: 0;
+    display: inline-block;
+    max-width: 100%;
+  }
+
+  .tiptap-image-container {
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+  }
+
+  .tiptap-image {
+    border-radius: var(--tt-radius-xs, 0.25rem);
+    outline: 0.125rem solid transparent;
+  }
+
+  .tiptap-image-caption {
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--tt-gray-500, #6b7280);
+    margin-top: 0.5rem;
+  }
+
+  // Resize handles
+  .resize-handle {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background-color: var(--tt-brand-color-500, #3b82f6);
+    border: 2px solid white;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+
+    &:hover {
+      background-color: var(--tt-brand-color-600, #2563eb);
+      transform: scale(1.1);
+    }
+  }
+
+  .resize-handle-nw {
+    top: -6px;
+    left: -6px;
+    cursor: nw-resize;
+  }
+
+  .resize-handle-ne {
+    top: -6px;
+    right: -6px;
+    cursor: ne-resize;
+  }
+
+  .resize-handle-sw {
+    bottom: -6px;
+    left: -6px;
+    cursor: sw-resize;
+  }
+
+  .resize-handle-se {
+    bottom: -6px;
+    right: -6px;
+    cursor: se-resize;
+  }
 }

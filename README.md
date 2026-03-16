@@ -109,6 +109,10 @@ Utvecklingsbloggen ska anpassas så att färger, typografi och känsla passar **
 
 ## 🧪 Bonus / Expriment
 
+<details>
+   
+<summary>Projektet innehåller b.la. simpla E2E, Github Workflows och Huskey</summary>
+
 ### Github Workflow
 Som en bonus finns det ett supersimpelt [Github Workflow](https://docs.github.com/en/actions/how-tos/write-workflows) i detta projekt, som säkerställer att PR mot main är korrekt, att E2E går igenom, att lint lyckas och att applikationen bygger fullt ut (npm run build).
 
@@ -141,6 +145,8 @@ npx playwright test
 # Kör tester i specifik browser
 npx playwright test --project=chromium
 ```
+
+</details>
 
 ## 📸 Screenshot
 

@@ -98,9 +98,9 @@ docker run -p 3000:3000 --env-file .env utvecklingsblogg
 ## 📦 Projektdelar
 
 ### Publik del
-- Lista med inlägg samt tillhörande paginering
+- Publicerade inlägg i grid 
 - Individuella, snyggt formaterade bloggposter (HTML)
-- Footer per-post med Postat när/av
+- Footer per-post med Postat när/med taggar
 - Responsiv design som matchar Nattskens vibe, med extra fokus på Mobile First
 - Enkel sökning efter inlägg
 

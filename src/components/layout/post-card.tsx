@@ -43,7 +43,7 @@ export default function PostCard({ post, isLoggedIn }: PostCardProps) {
             <footer className="text-xs text-muted">
                 <time dateTime={post.publishDate?.toISOString()}>
                     {isUnpublished
-                        ? `Skapad: ${formatDate(post.createdAt)}`
+                        ? formatDate(post.createdAt)
                         : formatDate(post.publishDate)}
                 </time>
             </footer>

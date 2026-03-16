@@ -1,10 +1,10 @@
-# 🌙 Nattsken - Utvecklingsblogg
+#  Utvecklingsblogg - Nattsken
 
 **Ett individuellt arbete för Lexicon Front-end-utbildningen 2025-2026**
 
 Projekt för https://github.com/Lexicon-Utbildning-Front-end-2025-2026/individuellt-arbete
 
-Live: https://blogg.nattsken.se
+Live version: https://blogg.nattsken.se
 
 ## 📋 Projektbeskrivning
 

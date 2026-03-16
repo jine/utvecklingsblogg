@@ -118,6 +118,8 @@ docker run -p 3000:3000 --env-file .env utvecklingsblogg
 
 ## 🧪 Tester
 
+Lite som bonus så har jag lagt till ett superenkelt E2E test i detta projekt, det enda den egentligen gör / kollar efter är om startsidan laddar och det finns fler än en <article> synlig, men jag la till det mest lite som bonus / test.
+
 ### Köra E2E-tester med Playwright
 
 ```bash

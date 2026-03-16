@@ -4,7 +4,7 @@ import { chromium } from "@playwright/test";
  * This script uses Playwright to take a screenshot of the homepage of the blog and saves it to the public folder.
  * The screenshot is taken at a viewport size of 1280x1080 and includes the full page.
  *
- * To run this script, use the command: `npx ts-node scripts/take-screenshot.ts`
+ * To run this script, use the command: `npm run screenshot`
  * Make sure you have Playwright installed and set up in your project before running the script.
  *
  * @author Jim Nelin <jim@jine.se>

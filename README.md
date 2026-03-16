@@ -60,8 +60,11 @@ Utvecklingsbloggen ska anpassas så att färger, typografi och känsla passar **
 - [Dockerfile](https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile) för deployment
 
 ## 🚀 Installation
+
 <details>
+   
 <summary>Instruktioner för att starta utvecklingsmiljön</summary>
+
 ### Förkrav
 - [Node.js](https://nodejs.org/) (version 20+)
 - [PostgreSQL](https://www.postgresql.org/) databas (eller [Neon](https://neon.tech) för serverless)

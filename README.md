@@ -102,11 +102,27 @@ Utvecklingsbloggen ska anpassas så att färger, typografi och känsla passar **
 
    Besök [http://localhost:3000](http://localhost:3000)
 
-## 🧪 Tester
+## 🧪 Bonus / Expriment
 
-Lite som bonus så har jag lagt till ett superenkelt E2E test i detta projekt, det enda den egentligen gör / kollar efter är om startsidan laddar och det finns fler än en <article> synlig, men jag la till det mest lite som bonus / test.
+### Github Workflow
+Som en bonus finns det ett supersimpelt [Github Workflow](https://docs.github.com/en/actions/how-tos/write-workflows) i detta projekt, som säkerställer att PR mot main är korrekt, att E2E går igenom, att lint lyckas och att applikationen bygger fullt ut (npm run build).
 
-### Köra E2E-tester med Playwright
+Mer detaljer finns i [.github/workflows/ci.yml](https://github.com/jine/utvecklingsblogg/blob/main/.github/workflows/ci.yml)
+
+### Automagisk Lint vid commit
+En till bonusfeature som finns med i projektet är [husky](https://typicode.github.io/husky/), ett plugin som automagiskt kör lint vid commits, för att säkerställa att kodbasen har rätt kodstandard och formatering.
+
+[.husky/pre-commit](https://github.com/jine/utvecklingsblogg/blob/main/.husky/pre-commit)
+
+### E2E Testing
+
+Lite som en sista bonus så har jag lagt till ett superenkelt E2E test i detta projekt, det enda den egentligen gör / kollar efter är om startsidan laddar och det finns fler än en <article> synlig, men jag la till det mest lite som expriment och bonus.
+
+E2E ligger numera även med i CI-jobbet (github workflow:et) ovan.
+
+Det går även att köra testerna manuellt enligt nedan
+
+#### Köra E2E-tester med Playwright
 
 ```bash
 # Kör tester i UI-läge

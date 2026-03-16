@@ -151,6 +151,7 @@ npx playwright test --project=chromium
 ## 📸 Screenshot
 
 ![Screenshot av blogg.nattsken.se](public/screenshot.png)
+![Screenshot, inloggad som admin](public/screenshot2.png)
 
 ## 📅 Projektplanering (Lexicon)
 

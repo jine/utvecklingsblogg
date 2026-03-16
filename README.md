@@ -1,10 +1,12 @@
-# Nattsken - Utvecklingsblogg
+#  Utvecklingsblogg - Nattsken
 
 **Ett individuellt arbete för Lexicon Front-end-utbildningen 2025-2026**
 
-Projektet är för https://github.com/Lexicon-Utbildning-Front-end-2025-2026/individuellt-arbete
+Projekt för https://github.com/Lexicon-Utbildning-Front-end-2025-2026/individuellt-arbete
 
-## Projektbeskrivning
+Live version: https://blogg.nattsken.se
+
+## 📋 Projektbeskrivning
 
 ### Intro
 Jag vill simulera en verklighetstrogen uppgift där jag kastas in i ett projekt och ska utveckla en blogg åt något företag. I detta fall är det faktiskt ett projekt jag startat vid sidan av Lexicon med projektnamnet **Nattsken**. Mycket av koden, designen, frontend i Next.js, backend i Express m.m. finns redan klart för det projektet. Men - stora delar av det projektet är saker jag inte vill dela publikt och passar därför inte scope:et för detta individuella projekt åt Lexicon.
@@ -16,7 +18,7 @@ Skriven i Next.js och vara rätt simpel rent layout-mässigt, men extra vikt lä
 Tanken med detta upplägg är för att uppfylla både uppgiften men samtidigt få något jag kan använda i utvecklingen för mitt existerande projekt också.
 
 ### Design
-Designen/Layout tas fram antingen med Figma, men utgå ifrån inspirationslänkarna nedan.
+Designen/Layout tas fram med Figma, men ska utgå ifrån inspirationslänkarna nedan.
 
 Utvecklingsbloggen ska anpassas så att färger, typografi och känsla passar **Nattsken** i övrigt - enligt existerande designdokument.
 
@@ -24,56 +26,135 @@ Utvecklingsbloggen ska anpassas så att färger, typografi och känsla passar **
 - [Cloudflare: Blogg](https://blog.cloudflare.com) 
 - [Cloudflare: Individuell bloggpost](https://blog.cloudflare.com/vinext/)
 
-
-### Tekniker
-Inloggning sker med enkel Google OAuth där jag enbart tillåter personer från domänen jine.se att logga in. Det är enkelt löst genom att inte tillåta OAuth från andra Google-konton än inom domänen.
-
-Databasen för **Nattsken** är PostgreSQL. Av säkerhetsskäl och enkelhet valde jag att använda Neon (serverless PostgreSQL) i detta projekt, dvs hålla databasen för bloggposter helt separat. 
-Jag valde Neon just för att det är mer likt _vanlig_ Postgres än t.ex. Supabase.
-
-Det gör även att jag slipper migrationsfiler för att hålla riktiga databasen i rätt stadie, samt håller utvecklingsprocesserna separata. Huvudprojektet använder sig av websockets, realtids-data och platsinformation, så det är av självklara skäl som denna plattform hålls separat. 
-
-Trots den separata databasen och att det bara är jag som kan logga in m.h.a OAuth, så är det viktigt att all postdata valideras med Zod när jag postar något.
-
-Admin-delen är en simpel CRUD via API-routes som i sin tur kommunicerar med Neon, inget separat backend utanför Next.js behövs.
-Men jag vill kunna bifoga bilder (eller egentligen klistra in) bilder direkt i admin/WYSIWYG-gränssnittet.
-
-Av enkelhetsskäl hostas den på samma plattform som projektet, en egen-hostad Coolify (som fungerar ungefär som Vercel).
-
-## Tech-stack
+## 🛠️ Tech-stack
 
 - **Framework**: Next.js 16 (App Router) + TypeScript
 - **Rich text-editor**: Tiptap
 - **Styling**: Tailwind CSS (**anpassat** efter Nattskens designsystem)
 - **Databas**: Neon (Serverless PostgreSQL), Prisma ORM
-- **Autentisering**: Auth.js + Google OAuth (endast @jine.se)
+- **Autentisering**: Better Auth + Google OAuth (endast @jine.se)
 - **Validering**: Zod
-- **Bildhantering**: Lokal uppladdning i admin (kommer specificeras närmare)
-- **Deployment**: Self-hosted Coolify
+- **Bildhantering**: Lokal uppladdning i admin
+- **Deployment**: Self-hosted Coolify (Docker)
+- **Testing**: Playwright (E2E)
 
-## Projektdelar
+## 📦 Projektdelar
 
 ### Publik del
-- Lista med inlägg samt tillhörande paginering
+- Publicerade inlägg i grid
 - Individuella, snyggt formaterade bloggposter (HTML)
-- Footer per-post med Postat när/av
+- Postat när och med taggar
 - Responsiv design som matchar Nattskens vibe, med extra fokus på Mobile First
-- Enkel sökning efter inlägg (EXTRA: Kolla på [fuzzystrmatch](https://neon.com/docs/extensions/fuzzystrmatch))
+- Enkel sökning efter inlägg
 
-### Admin (skyddad med inloggning)
+### Administration (skyddad med inloggning)
 - Full CRUD för bloggposter
-- Rich text med [Tiptap](https://tiptap.dev/) + möjlighet att klistra in eller ladda upp bilder lokalt
+- Rich text med [Tiptap](https://tiptap.dev/) + möjlighet att klistra in bilder
 - Strikt validering med [Zod](https://zod.dev/) på all indata
 - Google OAuth med domänbegränsning (jine.se)
+- Visuell markering av opublicerade inlägg (utkast)
 
 ### Övrigt
 - Neon databas ([Neon](https://neon.com/))
-. [Prisma ORM](https://www.prisma.io/)
-- [Dockerfile](https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile) för att få snabbare deployment i Coolify
+- [Prisma ORM](https://www.prisma.io/)
+- [Dockerfile](https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile) för deployment
 
-## Projektplanering (Lexicon)
+## 🚀 Installation
 
-- **GitHub Projects + Product Backlog**: [Projekt Utvecklingsblogg](https://github.com/users/jine/projects/5)
+<details>
+   
+<summary>Instruktioner för att starta utvecklingsmiljön</summary>
+
+### Förkrav
+- [Node.js](https://nodejs.org/) (version 20+)
+- [PostgreSQL](https://www.postgresql.org/) databas (eller [Neon](https://neon.tech) för serverless)
+- Google OAuth credentials (https://console.cloud.google.com/)
+
+### Steg-för-steg
+
+1. **Klona repot**
+   ```bash
+   git clone <repo-url>
+   cd utvecklingsblogg
+   ```
+
+2. **Installera dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Konfigurera miljövariabler**
+   ```bash
+   cp .env.example .env
+   ```
+   
+   Redigera `.env` och fyll i:
+   - `DATABASE_URL` - Din PostgreSQL connection string
+   - `GOOGLE_CLIENT_ID` & `GOOGLE_CLIENT_SECRET` - Från Google Cloud Console
+   - `BETTER_AUTH_SECRET` - Generera en stark slumpmässig sträng, används för Better Auth
+   - `NEXT_PUBLIC_APP_URL` - Din lokala URL (t.ex. `http://localhost:3000`)
+
+4. **Kör databasmigreringar**
+   ```bash
+   npx prisma migrate dev
+   ```
+
+5. **Starta utvecklingsservern**
+   ```bash
+   npm run dev
+   ```
+
+   Besök [http://localhost:3000](http://localhost:3000)
+</details>
+
+## 🧪 Bonus / Expriment
+
+<details>
+   
+<summary>Projektet innehåller b.la. simpla E2E, Github Workflows och Huskey</summary>
+
+### Github Workflow
+Som en bonus finns det ett supersimpelt [Github Workflow](https://docs.github.com/en/actions/how-tos/write-workflows) i detta projekt, som säkerställer att PR mot main är korrekt, att E2E går igenom, att lint lyckas och att applikationen bygger fullt ut (npm run build).
+
+Mer detaljer finns i [.github/workflows/ci.yml](https://github.com/jine/utvecklingsblogg/blob/main/.github/workflows/ci.yml)
+
+### Automagisk Lint vid commit
+En till bonusfeature som finns med i projektet är [husky](https://typicode.github.io/husky/), ett plugin som automagiskt kör lint vid commits, för att säkerställa att kodbasen har rätt kodstandard och formatering.
+
+[.husky/pre-commit](https://github.com/jine/utvecklingsblogg/blob/main/.husky/pre-commit)
+
+### E2E Testing
+
+Lite som en sista bonus så har jag lagt till ett superenkelt E2E test i detta projekt, det enda den egentligen gör / kollar efter är om startsidan laddar och det finns fler än en <article> synlig, men jag la till det mest lite som expriment och bonus.
+
+E2E ligger numera även med i CI-jobbet (github workflow:et) ovan.
+
+Du hittar E2E Test specifikationerna [här](https://github.com/jine/utvecklingsblogg/tree/main/e2e).
+
+Det går även att köra testerna manuellt enligt nedan
+
+#### Köra E2E-tester med Playwright
+
+```bash
+# Kör tester i UI-läge
+npx playwright test --ui
+
+# Kör alla tester
+npx playwright test
+
+# Kör tester i specifik browser
+npx playwright test --project=chromium
+```
+
+</details>
+
+## 📸 Screenshot
+
+![Screenshot av blogg.nattsken.se](public/screenshot.png)
+
+## 📅 Projektplanering (Lexicon)
+
+- **GitHub Projects + Project Backlog**: [Projekt Utvecklingsblogg](https://github.com/users/jine/projects/5)
 - **Wireframes / Designskiss**: [Utkast 1](https://www.figma.com/make/ni24Umd4pqnUxOT8V821xO/Develop-Blog-for-Nattsken?t=uumlYSsbnfbGeXpY-1)
 
 ### Nattsken-referensdokument (Ej publika)
@@ -81,3 +162,13 @@ Av enkelhetsskäl hostas den på samma plattform som projektet, en egen-hostad C
 - **README.md**: https://github.com/jine/nattsken.se/blob/main/README.md
 - **API.md**: https://github.com/jine/nattsken.se/blob/main/API.md
 - **ARCHITECTURE.md**: https://github.com/jine/nattsken.se/blob/main/ARCHITECTURE.md
+
+## 👤 Om mig / Övrigt
+
+Projektet är utvecklat av mig - **Jim Nelin** som ett "mini projekt" på ca 2 veckor inkl. planering/demo för min portfolio. Läs mer om kraven på https://github.com/Lexicon-Utbildning-Front-end-2025-2026/individuellt-arbete.
+
+- E-post: [jim@jine.se](mailto:jim@jine.se)
+- GitHub: [@jine](https://github.com/jine)
+- Websajt/Porfolio: [jimnelin.com](https://jimnelin.com)
+- LinkedIn: [Jim Nelin](https://www.linkedin.com/in/jimnelin/)
+

@@ -12,7 +12,7 @@ import { chromium } from "@playwright/test";
 async function takeScreenshot() {
     const browser = await chromium.launch();
     const context = await browser.newContext({
-        viewport: { width: 1280, height: 1080 },
+        viewport: { width: 1280, height: 720 },
     });
     const page = await context.newPage();
 

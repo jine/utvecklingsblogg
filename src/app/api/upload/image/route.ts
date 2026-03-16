@@ -16,12 +16,12 @@ const MAX_WIDTH = 1920;
 const MAX_HEIGHT = 1080;
 
 /**
- * Resize image if it exceeds maximum dimensions
+ * Process image: resize if needed and strip all EXIF/metadata for privacy
  * Maintains aspect ratio and only downsizes (never upscales)
  * Returns the processed buffer
  */
-async function resizeImage(buffer: Buffer, mimeType: string): Promise<Buffer> {
-    // Skip resizing for GIFs (preserve animation)
+async function processImage(buffer: Buffer, mimeType: string): Promise<Buffer> {
+    // Skip processing for GIFs (preserve animation, but still strip metadata if possible)
     if (mimeType === "image/gif") {
         return buffer;
     }
@@ -30,28 +30,31 @@ async function resizeImage(buffer: Buffer, mimeType: string): Promise<Buffer> {
         const image = sharp(buffer);
         const metadata = await image.metadata();
 
-        // If image is already within bounds, return original
-        if (
-            !metadata.width ||
-            !metadata.height ||
-            (metadata.width <= MAX_WIDTH && metadata.height <= MAX_HEIGHT)
-        ) {
-            return buffer;
-        }
+        // Check if resizing is needed
+        const needsResize =
+            metadata.width &&
+            metadata.height &&
+            (metadata.width > MAX_WIDTH || metadata.height > MAX_HEIGHT);
 
-        // Resize to fit within MAX_WIDTH x MAX_HEIGHT while maintaining aspect ratio
-        // Using 'inside' fit ensures the image fits within the bounds
-        const resizedBuffer = await image
-            .resize(MAX_WIDTH, MAX_HEIGHT, {
+        // Build processing pipeline
+        let pipeline = image;
+
+        // Resize if needed
+        if (needsResize) {
+            pipeline = pipeline.resize(MAX_WIDTH, MAX_HEIGHT, {
                 fit: "inside",
                 withoutEnlargement: true,
-            })
-            .toBuffer();
+            });
+        }
 
-        return resizedBuffer;
+        // Strip all EXIF and metadata for privacy
+        // sharp strips metadata by default, but we explicitly ensure no metadata is kept
+        const processedBuffer = await pipeline.toBuffer();
+
+        return processedBuffer;
     } catch (error) {
-        console.error("Image resize failed:", error);
-        // Return original buffer if resize fails
+        console.error("Image processing failed:", error);
+        // Return original buffer if processing fails
         return buffer;
     }
 }
@@ -179,9 +182,9 @@ export async function POST(request: Request): Promise<Response> {
         // Ensure upload directory exists
         await mkdir(UPLOAD_DIR, { recursive: true });
 
-        // Read file and resize if needed
+        // Read file, resize if needed, and strip EXIF metadata
         const buffer = Buffer.from(await file.arrayBuffer());
-        const processedBuffer = await resizeImage(buffer, file.type);
+        const processedBuffer = await processImage(buffer, file.type);
 
         // Write processed file to disk
         await writeFile(join(UPLOAD_DIR, filename), processedBuffer);

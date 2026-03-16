@@ -31,7 +31,7 @@ Utvecklingsbloggen ska anpassas så att färger, typografi och känsla passar **
 ### Förkrav
 - [Node.js](https://nodejs.org/) (version 20+)
 - [PostgreSQL](https://www.postgresql.org/) databas (eller [Neon](https://neon.tech) för serverless)
-- Google OAuth credentials (valfritt, endast för admin-funktionalitet)
+- Google OAuth credentials (https://console.cloud.google.com/)
 
 ### Steg-för-steg
 

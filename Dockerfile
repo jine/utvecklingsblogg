@@ -72,6 +72,9 @@ RUN --mount=type=cache,target=/app/.next/cache \
 
 FROM node:${NODE_VERSION} AS runner
 
+# Install curl for health checks and gosu for user switching
+RUN apt-get update && apt-get install -y curl gosu && rm -rf /var/lib/apt/lists/*
+
 # Set working directory
 WORKDIR /app
 
@@ -82,7 +85,7 @@ ENV HOSTNAME="0.0.0.0"
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
-# Uncomment the following line in case you want to disable telemetry during the run time.
+# Uncomment the following line in case you want to want to disable telemetry during the run time.
 # ENV NEXT_TELEMETRY_DISABLED=1
 
 # Copy production assets
@@ -90,11 +93,21 @@ COPY --from=builder --chown=node:node /app/public ./public
 COPY --from=builder --chown=node:node /app/.next/standalone ./
 COPY --from=builder --chown=node:node /app/.next/static ./.next/static
 
-# Switch to non-root user for security best practices
-USER node
+# Copy entrypoint script
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# Create uploads directory (ownership fixed at runtime by entrypoint)
+RUN mkdir -p /app/public/uploads/images
 
 # Expose port 3000 to allow HTTP traffic
 EXPOSE 3000
 
-# Start Next.js standalone server
+# Health check for Coolify - checks if the application is responding
+# Interval: 30s, Timeout: 3s, Start period: 5s, Retries: 3
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:3000/ || exit 1
+
+# Use entrypoint to fix permissions then run as node user
+ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["node", "server.js"]

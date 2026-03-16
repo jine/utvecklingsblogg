@@ -29,9 +29,23 @@ async function upsertTags(names: string[]): Promise<Tag[]> {
 
 export async function getPostBySlug(
     slug: string | undefined,
+    session?: { user: { id: string } } | null,
 ): Promise<PostWithTags | null> {
     if (!slug) return null;
-    return prisma.post.findUnique({ where: { slug }, include: { tags: true } });
+
+    const post = await prisma.post.findUnique({
+        where: { slug },
+        include: { tags: true },
+    });
+
+    if (!post) return null;
+
+    // If post is not published and user is not logged in, return null (404)
+    if (!post.published && !session) {
+        return null;
+    }
+
+    return post;
 }
 
 export async function getAllPosts(): Promise<Post[]> {

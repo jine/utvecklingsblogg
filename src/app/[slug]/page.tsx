@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { EditLink } from "@/components/ui/edit-link";
 import { Tags } from "@/components/ui/tags";
+import { auth } from "@/lib/auth";
 import { getPostBySlug } from "@/lib/posts";
 import { formatDate } from "@/lib/utils";
 
@@ -15,7 +17,8 @@ export async function generateMetadata({
     params,
 }: PageProps): Promise<Metadata> {
     const { slug } = await params;
-    const post = await getPostBySlug(slug);
+    const session = await auth.api.getSession({ headers: await headers() });
+    const post = await getPostBySlug(slug, session);
 
     if (!post) {
         return {
@@ -49,8 +52,11 @@ export default async function PostPage({ params }: PageProps) {
     // If slug is missing, show 404 page
     if (!slug) notFound();
 
-    // Fetch the post by slug
-    const post = await getPostBySlug(slug);
+    // Get session to check if user is logged in
+    const session = await auth.api.getSession({ headers: await headers() });
+
+    // Fetch the post by slug (passing session to handle unpublished posts)
+    const post = await getPostBySlug(slug, session);
 
     // If no post is found, show 404 page
     if (!post) notFound();

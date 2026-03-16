@@ -289,7 +289,10 @@ export function SimpleEditor({ content, onChange }: { content?: string; onChange
     // callback to pass the updated HTML content back to the parent component.
     content: content,
     onUpdate({ editor }) {
-      onChange?.(editor.getHTML())
+      // Defer state update to avoid flushSync warning during React render
+      requestAnimationFrame(() => {
+        onChange?.(editor.getHTML())
+      })
     },
   })
 

@@ -136,7 +136,7 @@ npx playwright test --project=chromium
 
 ## 👤 Om mig / Övrigt
 
-Projektet är utvecklat av mig - **Jim Nelin** som ett "mini projekt" för min portfolio. Läs mer om kraven på https://github.com/Lexicon-Utbildning-Front-end-2025-2026/individuellt-arbete.
+Projektet är utvecklat av mig - **Jim Nelin** som ett "mini projekt" på ca 2 veckor inkl. planering/demo för min portfolio. Läs mer om kraven på https://github.com/Lexicon-Utbildning-Front-end-2025-2026/individuellt-arbete.
 
 - E-post: [jim@jine.se](mailto:jim@jine.se)
 - GitHub: [@jine](https://github.com/jine)
